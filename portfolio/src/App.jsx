@@ -207,8 +207,10 @@ const NotionPortfolio = () => {
         <div className="flex gap-6 text-sm font-medium text-gray-600 items-center">
           <a href="#contact" className="hover:text-black transition duration-200 hidden sm:block relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-black after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">Contact</a>
           <a 
-            href="/Resume.pdf" 
+            href="/Resume.pdf" // Ensure Resume.pdf is in your 'public' folder
             download="Ayush_Kumar_Resume.pdf"
+            target="_blank" 
+            rel="noreferrer"
             className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition material-btn"
           >
             <Download size={16} />
@@ -349,10 +351,20 @@ const NotionPortfolio = () => {
 
                     {/* Action Buttons */}
                     <div className="flex gap-3 mt-auto">
-                      <a href={project.liveLink} className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white text-sm font-medium py-2.5 rounded-lg hover:bg-black transition material-btn">
+                      <a 
+                        href={project.liveLink} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white text-sm font-medium py-2.5 rounded-lg hover:bg-black transition material-btn"
+                      >
                         <Globe size={16} /> Live Demo
                       </a>
-                      <a href={project.repoLink} className="flex-1 flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium py-2.5 rounded-lg hover:bg-gray-50 transition material-btn">
+                      <a 
+                        href={project.repoLink} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="flex-1 flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium py-2.5 rounded-lg hover:bg-gray-50 transition material-btn"
+                      >
                         <Code2 size={16} /> Code
                       </a>
                     </div>
