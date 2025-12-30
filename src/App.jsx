@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import 'lenis/dist/lenis.css'
+import Lenis from 'lenis';
 import {
   motion,
   AnimatePresence,
@@ -13,6 +15,20 @@ import {
   Server, Database, Code2, Layers, Wrench,
   User, Download, Activity, Send, Terminal, Cloud, Phone
 } from 'lucide-react';
+
+// --- UTILS ---
+const RevealOnScroll = ({ children, delay = 0, className = "" }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+    viewport={{ once: true, margin: "-10%" }}
+    transition={{ duration: 0.8, ease: "easeOut", delay }}
+    className={className}
+    style={{ willChange: "opacity, transform, filter" }}
+  >
+    {children}
+  </motion.div>
+);
 
 // --- ASSETS ---
 import pfpImage from './assets/pfp.jpeg';
@@ -142,21 +158,22 @@ const HeadManager = () => {
   return null;
 };
 
-// 2. SLIME BACKGROUND (VIBRANT GLASS)
+// 2. SLIME BACKGROUND (OPTIMIZED)
 const SlimeBackground = () => {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-[#fafafa]">
-      {/* Dynamic Glass Flow Elements */}
+      {/* Dynamic Flow Elements - Removed backdrop-blur for performance */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(4)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute bg-white/20 backdrop-blur-[25px] border border-white/40 rounded-full"
+            className="absolute bg-white/30 border border-white/40 rounded-full"
             style={{
               width: 250 + i * 50,
               height: 250 + i * 50,
               left: `${15 + i * 20}%`,
               top: `${15 + i * 15}%`,
+              willChange: "transform"
             }}
             animate={{
               x: [0, 60, -40, 0],
@@ -171,26 +188,30 @@ const SlimeBackground = () => {
         ))}
       </div>
 
-      {/* Truly Vibrant Blobs (Small & Saturated) */}
-      <div className="w-full h-full relative" style={{ filter: 'blur(90px)' }}>
+      {/* Truly Vibrant Blobs */}
+      <div className="w-full h-full relative" style={{ filter: 'blur(90px)', willChange: 'transform' }}>
         <motion.div
           animate={{ x: [-40, 40, -40], y: [-30, 30, -30], scale: [1, 1.2, 1] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          style={{ willChange: "transform" }}
           className="absolute top-[20%] left-[25%] w-[60vw] h-[60vw] md:w-[320px] md:h-[320px] bg-indigo-600/50 rounded-full mix-blend-multiply"
         />
         <motion.div
           animate={{ x: [40, -40, 40], y: [30, -30, 30], scale: [1.2, 0.9, 1.2] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          style={{ willChange: "transform" }}
           className="absolute top-[40%] right-[25%] w-[65vw] h-[65vw] md:w-[350px] md:h-[350px] bg-sky-500/50 rounded-full mix-blend-multiply"
         />
         <motion.div
           animate={{ y: [60, -60, 60], scale: [1, 1.3, 1] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          style={{ willChange: "transform" }}
           className="absolute bottom-[20%] left-[40%] w-[60vw] h-[60vw] md:w-[330px] md:h-[330px] bg-rose-500/50 rounded-full mix-blend-multiply"
         />
         <motion.div
           animate={{ x: [-50, 50, -50], scale: [0.9, 1.1, 0.9] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          style={{ willChange: "transform" }}
           className="absolute top-[50%] left-[20%] w-[55vw] h-[55vw] md:w-[280px] md:h-[280px] bg-violet-600/40 rounded-full mix-blend-multiply"
         />
       </div>
@@ -297,6 +318,7 @@ const ParticleDust = ({ count = 40, direction = 'right' }) => {
 };
 
 // 5. NAVBAR
+// 5. NAVBAR
 const Navbar = () => (
   <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 sm:pt-6 px-4 pointer-events-none">
     <motion.div
@@ -318,7 +340,7 @@ const Navbar = () => (
         </div>
       </div>
       <div className="flex items-center gap-3 sm:gap-4">
-        <a href="#contact" className="text-sm font-medium tracking-tight text-slate-500 hover:text-slate-900 transition-colors">Contact</a>
+
         <motion.a
           whileHover={{ scale: 1.05, backgroundColor: "#0f172a" }}
           whileTap={{ scale: 0.95 }}
@@ -333,48 +355,157 @@ const Navbar = () => (
   </nav>
 );
 
-const TechCategory = ({ category }) => {
-  const Icon = category.icon;
-  return (
-    <div className="backdrop-blur-[20px] backdrop-saturate-[150%] bg-white/40 border border-white/60 rounded-3xl p-4 sm:p-6 shadow-sm h-full relative overflow-hidden group/tech">
-      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
-      <div className="flex items-center gap-2 mb-4 sm:mb-6 relative z-10">
-        <div className="p-1.5 bg-white/80 rounded-lg shadow-sm text-slate-400">
-          <Icon size={16} />
-        </div>
-        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">{category.category}</h4>
-      </div>
-      <div className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-6 sm:gap-y-8 items-center justify-start px-1 sm:px-2 relative z-10">
-        {category.items.map((item) => (
-          <motion.div
-            key={item.name}
-            className="group relative flex flex-col items-center"
-            whileHover="hover"
-            initial="initial"
-            whileTap="hover"
-          >
-            <motion.div
-              variants={{
-                hover: { y: -5, scale: 1.15 }
-              }}
-              transition={{ type: "spring", stiffness: 200, damping: 25 }}
-              className="w-10 h-10 flex items-center justify-center transition-all duration-300"
-            >
-              <img src={item.icon} alt={item.name} className="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
-            </motion.div>
+const getPillStyles = (colorClass) => {
+  const colorMap = {
+    'text-sky-500': 'bg-sky-50 text-sky-700 border-sky-200',
+    'text-yellow-500': 'bg-yellow-50 text-yellow-700 border-yellow-200',
+    'text-blue-500': 'bg-blue-50 text-blue-700 border-blue-200',
+    'text-emerald-500': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    'text-green-600': 'bg-green-50 text-green-700 border-green-200',
+    'text-gray-600': 'bg-gray-50 text-gray-700 border-gray-200',
+    'text-sky-400': 'bg-sky-50 text-sky-700 border-sky-200',
+    'text-blue-600': 'bg-blue-50 text-blue-700 border-blue-200',
+    'text-orange-500': 'bg-orange-50 text-orange-700 border-orange-200',
+    'text-purple-500': 'bg-purple-50 text-purple-700 border-purple-200',
+    'text-blue-400': 'bg-blue-50 text-blue-700 border-blue-200',
+    'text-green-500': 'bg-green-50 text-green-700 border-green-200',
+    'text-red-500': 'bg-red-50 text-red-700 border-red-200',
+  };
+  return colorMap[colorClass] || 'bg-slate-50 text-slate-700 border-slate-200';
+};
 
+// 4.2 MINI PARTICLE DUST (For Icons)
+const MiniParticleDust = ({ count = 12 }) => {
+  const particles = React.useMemo(() => {
+    return Array.from({ length: count }).map((_, i) => ({
+      id: i,
+      angle: (i / count) * 360,
+      radius: Math.random() * 20 + 10,
+      size: Math.random() * 3 + 1,
+      delay: Math.random() * 0.1
+    }));
+  }, [count]);
+
+  return (
+    <>
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute bg-slate-300 rounded-full z-0 pointer-events-none"
+          style={{
+            left: "50%",
+            top: "50%",
+            width: p.size,
+            height: p.size,
+            x: "-50%",
+            y: "-50%",
+          }}
+          initial={{ opacity: 0, scale: 0 }}
+          exit={{
+            opacity: [1, 0],
+            x: `calc(-50% + ${Math.cos(p.angle * (Math.PI / 180)) * p.radius}px)`,
+            y: `calc(-50% + ${Math.sin(p.angle * (Math.PI / 180)) * p.radius}px)`,
+            scale: 0,
+          }}
+          transition={{
+            duration: 0.4,
+            ease: "easeOut",
+            delay: p.delay
+          }}
+        />
+      ))}
+    </>
+  );
+};
+
+const TechItem = ({ item }) => {
+  const [active, setActive] = useState(false);
+  const pillStyles = getPillStyles(item.color);
+
+  return (
+    <motion.div
+      layout
+      className={`group relative flex items-center justify-center cursor-pointer z-10 shrink-0 select-none ${active
+        ? `px-4 py-1.5 rounded-full border ${pillStyles}`
+        : "w-16 h-16 rounded-2xl"
+        }`}
+      onTap={() => setActive((prev) => !prev)}
+      transition={{ layout: { duration: 0.2, type: "spring", stiffness: 300, damping: 25 } }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <AnimatePresence mode="popLayout" initial={false}>
+        {!active ? (
+          <motion.div
+            key="icon"
+            className="flex items-center justify-center relative w-full h-full"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 1, scale: 1, transition: { duration: 0.4 } }} // Keep container alive
+          >
+            <motion.img
+              src={item.icon}
+              alt={item.name}
+              className="w-9 h-9 object-contain drop-shadow-sm relative z-10"
+              exit={{ opacity: 0, scale: 0.5, filter: "blur(4px)", transition: { duration: 0.1 } }}
+            />
+            <MiniParticleDust />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="name"
+            className="flex items-center justify-center relative w-full h-full"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 1, scale: 1, transition: { duration: 0.4 } }} // Keep container alive
+          >
             <motion.span
-              variants={{
-                initial: { opacity: 0, y: 5, scale: 0.9 },
-                hover: { opacity: 1, y: 12, scale: 1 }
-              }}
-              className="absolute whitespace-nowrap text-[10px] font-bold text-slate-700 tracking-wider pointer-events-none bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded shadow-sm border border-slate-100 z-20"
+              className="text-xs font-bold tracking-wide whitespace-nowrap relative z-10"
+              exit={{ opacity: 0, scale: 0.5, filter: "blur(4px)", transition: { duration: 0.1 } }}
             >
               {item.name}
             </motion.span>
+            <MiniParticleDust />
           </motion.div>
-        ))}
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
+const TechCategory = ({ category, index }) => {
+  const Icon = category.icon;
+  return (
+    <div className="backdrop-blur-[20px] backdrop-saturate-[150%] bg-white/40 border border-white/60 rounded-3xl p-4 sm:p-6 shadow-sm h-full relative overflow-hidden group/tech flex flex-col justify-center">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
+      <div className="flex items-center gap-2 mb-4 relative z-10 shrink-0">
+        <motion.div
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
+          className="p-1.5 bg-white/80 rounded-lg shadow-sm text-slate-400"
+        >
+          <Icon size={16} />
+        </motion.div>
+        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">{category.category}</h4>
       </div>
+
+      {/* Horizontal Scroll Container */}
+      <motion.div
+        layout
+        className="flex flex-nowrap items-center gap-3 sm:gap-4 overflow-x-auto pb-4 -mb-4 px-1 scrollbar-hide w-full"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: {
+            transition: { staggerChildren: 0.05, delayChildren: index * 0.1 + 0.2 }
+          }
+        }}
+      >
+        {category.items.map((item) => (
+          <TechItem key={item.name} item={item} />
+        ))}
+      </motion.div>
     </div>
   );
 };
@@ -479,6 +610,11 @@ const InteractiveHub = () => {
                     >
                       <img src={pfpImage} alt="Profile" className="w-full h-full object-cover rounded-full" />
                     </motion.div>
+
+                    {/* Status Dot */}
+                    <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 w-5 h-5 bg-emerald-500 border-[3px] border-white rounded-full z-20 flex items-center justify-center">
+                      <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+                    </div>
                   </div>
 
                   <div className="flex-1 text-center md:text-left">
@@ -570,7 +706,64 @@ const SocialButton = ({ icon: Icon, href }) => (
   </motion.a>
 );
 
-// 7. PROJECT CARD WITH FLOATING ANIMATION
+// 7. HORIZONTAL SCROLL SECTION (Sticky)
+const HorizontalScrollSection = ({ projects }) => {
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+
+  return (
+    <section ref={targetRef} className="relative h-[200vh] -mx-6 md:hidden">
+      <div className="sticky top-20 flex h-[60vh] items-center overflow-hidden">
+        <motion.div style={{ x, willChange: "transform" }} className="flex gap-6 px-6">
+          {projects.map((p, i) => (
+            <div key={i} className="min-w-[85vw]">
+              <ProjectCard project={p} index={i} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+// 7. PARALLAX HORIZONTAL ITEM for Mobile
+const HorizontalScrollItem = ({ children, className, containerRef }) => {
+  const ref = useRef(null);
+
+  // Track scroll progress of this item relative to the container
+  const { scrollXProgress } = useScroll({
+    target: ref,
+    container: containerRef,
+    axis: "x",
+    offset: ["center end", "center start"]
+  });
+
+  // Parallax Transformations
+  const scale = useTransform(scrollXProgress, [0, 0.5, 1], [0.85, 1, 0.85]);
+  const opacity = useTransform(scrollXProgress, [0, 0.5, 1], [0.6, 1, 0.6]);
+  const rotateY = useTransform(scrollXProgress, [0, 0.5, 1], [15, 0, -15]);
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{
+        scale,
+        opacity,
+        rotateY,
+        perspective: 1000
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// 7.1 PROJECT CARD WITH FLOATING ANIMATION
 const ProjectCard = ({ project, index }) => (
   <FloatingCard delay={index * 0.5} className="h-full">
     <SpotlightCard className="h-full rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 backdrop-blur-[32px] hover:shadow-2xl transition-all duration-500 border-white/40">
@@ -604,15 +797,17 @@ const ContactSection = () => (
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-white/30 backdrop-blur-xl border border-white/60 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 md:p-12 shadow-sm overflow-hidden relative"
+      className="bg-white/30 backdrop-blur-xl border border-white/60 rounded-[2rem] sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 shadow-sm overflow-hidden relative"
     >
-      <div className="grid md:grid-cols-2 gap-8 md:gap-12 relative z-10">
+      <div className="grid md:grid-cols-2 gap-6 md:gap-12 relative z-10">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-medium text-slate-800 mb-4 tracking-tight">Let's connect.</h2>
-          <p className="text-slate-500 text-sm sm:text-base mb-8 leading-relaxed">
+          <h2 className="text-xl sm:text-3xl font-medium text-slate-800 mb-2 sm:mb-4 tracking-tight">Let's connect.</h2>
+          <p className="text-slate-500 text-sm sm:text-base mb-6 md:mb-8 leading-relaxed">
             I'm always interested in hearing about new projects and opportunities.
           </p>
-          <div className="flex flex-col gap-4">
+
+          {/* Mobile: Horizontal Icons / Desktop: Vertical List */}
+          <div className="flex md:flex-col gap-4 mb-6 md:mb-0">
             <motion.a
               href={`tel:${DATA.phoneRaw}`}
               whileHover={{ x: 5 }}
@@ -622,7 +817,7 @@ const ContactSection = () => (
               <div className="w-10 h-10 rounded-full bg-white border border-slate-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:bg-slate-50 group-hover:border-slate-200 transition-all">
                 <Phone size={18} />
               </div>
-              <span className="group-hover:font-semibold transition-all">{DATA.phone}</span>
+              <span className="hidden md:inline group-hover:font-semibold transition-all">{DATA.phone}</span>
             </motion.a>
             <motion.a
               href="mailto:ravcr8r@gmail.com"
@@ -633,7 +828,7 @@ const ContactSection = () => (
               <div className="w-10 h-10 rounded-full bg-white border border-slate-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:bg-slate-50 group-hover:border-slate-200 transition-all">
                 <Mail size={18} />
               </div>
-              ravcr8r@gmail.com
+              <span className="hidden md:inline">ravcr8r@gmail.com</span>
             </motion.a>
             <motion.a
               href="https://linkedin.com/in/ravdreamin"
@@ -646,28 +841,29 @@ const ContactSection = () => (
               <div className="w-10 h-10 rounded-full bg-white border border-slate-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:bg-slate-50 group-hover:border-slate-200 transition-all">
                 <Linkedin size={18} />
               </div>
-              linkedin.com/in/ravdreamin
+              <span className="hidden md:inline">linkedin.com/in/ravdreamin</span>
             </motion.a>
           </div>
         </div>
-        <form className="space-y-4">
-          {['Name', 'Email'].map((placeholder, i) => (
-            <motion.div
-              key={placeholder}
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="space-y-2"
-            >
-              <motion.input
-                whileFocus={{ scale: 1.01, backgroundColor: "#ffffff" }}
-                type={placeholder === 'Email' ? 'email' : 'text'}
-                placeholder={placeholder}
-                className="w-full px-5 py-3.5 bg-white/50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-100 focus:border-slate-300 transition-all hover:bg-white/80 text-sm"
-              />
-            </motion.div>
-          ))}
+        <form className="space-y-3 md:space-y-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-1 md:gap-4">
+            {['Name', 'Email'].map((placeholder, i) => (
+              <motion.div
+                key={placeholder}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <motion.input
+                  whileFocus={{ scale: 1.01, backgroundColor: "#ffffff" }}
+                  type={placeholder === 'Email' ? 'email' : 'text'}
+                  placeholder={placeholder}
+                  className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-100 focus:border-slate-300 transition-all hover:bg-white/80 text-sm"
+                />
+              </motion.div>
+            ))}
+          </div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -676,15 +872,15 @@ const ContactSection = () => (
           >
             <motion.textarea
               whileFocus={{ scale: 1.01, backgroundColor: "#ffffff" }}
-              rows={4}
+              rows={3}
               placeholder="Message"
-              className="w-full px-5 py-3.5 bg-white/50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-100 focus:border-slate-300 transition-all resize-none hover:bg-white/80 text-sm"
+              className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-100 focus:border-slate-300 transition-all resize-none hover:bg-white/80 text-sm"
             />
           </motion.div>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full py-3.5 bg-slate-800 text-white font-medium rounded-xl hover:bg-slate-700 shadow-lg shadow-slate-400/20 flex items-center justify-center gap-2 text-sm"
+            className="w-full py-3 bg-slate-800 text-white font-medium rounded-xl hover:bg-slate-700 shadow-lg shadow-slate-400/20 flex items-center justify-center gap-2 text-sm"
           >
             <Send size={18} /> Send Message
           </motion.button>
@@ -695,6 +891,30 @@ const ContactSection = () => (
 );
 
 export default function App() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.1,
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  const projectsContainerRef = useRef(null);
+
   return (
     <div
       className="min-h-screen text-slate-800 selection:bg-slate-100 selection:text-slate-900 relative"
@@ -708,30 +928,28 @@ export default function App() {
         <div className="hidden md:block h-10"></div>
         <InteractiveHub />
         <section className="mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-4 mb-10 px-2"
-          >
+          <RevealOnScroll className="flex items-center gap-4 mb-10 px-2">
             <h2 className="text-2xl font-bold text-slate-800 tracking-tight">Selected Systems</h2>
             <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent" />
-          </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          </RevealOnScroll>
+
+          {/* Mobile: Sticky Horizontal Scroll */}
+          <HorizontalScrollSection projects={DATA.projects} />
+
+          {/* Desktop: Standard Grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {DATA.projects.map((p, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-              >
+              <RevealOnScroll key={i} delay={i * 0.1}>
                 <ProjectCard project={p} index={i} />
-              </motion.div>
+              </RevealOnScroll>
             ))}
           </div>
         </section>
-        <ContactSection />
+
+        <RevealOnScroll>
+          <ContactSection />
+        </RevealOnScroll>
+
         <footer className="pt-8 border-t border-slate-200/60 flex flex-col md:flex-row justify-between items-center text-sm text-slate-400 gap-4 mb-4">
           <div>
             &copy; {new Date().getFullYear()} <span className="font-medium text-slate-600">Gaurav</span>
