@@ -13,7 +13,8 @@ import {
 import {
   Github, Linkedin, Mail, ArrowUpRight,
   Server, Database, Code2, Layers, Wrench,
-  User, Download, Activity, Send, Terminal, Cloud, Phone
+  User, Download, Activity, Send, Terminal, Cloud, Phone,
+  Monitor, Archive, Shield
 } from 'lucide-react';
 
 // --- UTILS ---
@@ -31,7 +32,8 @@ const RevealOnScroll = ({ children, delay = 0, className = "" }) => (
 );
 
 // --- ASSETS ---
-import pfpImage from './assets/pfp.jpeg';
+import pfpImage from './assets/pfp1.jpeg';
+import cvFile from './assets/CV-gaurav.pdf';
 
 // --- ANIMATION VARIANTS ---
 const containerVariants = {
@@ -39,6 +41,31 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+  }
+};
+
+const textContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const fadeInUpVariants = {
+  hidden: { opacity: 0, y: 20, filter: "blur(5px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring",
+      stiffness: 50,
+      damping: 15
+    }
   }
 };
 
@@ -104,6 +131,7 @@ const DATA = {
       desc: "A production-grade backend service implementing core SRE patterns: circuit breakers, structured logging, and graceful degradation.",
       tech: ["Go", "Docker", "REST"],
       link: "https://sre-pilot.onrender.com",
+      icon: Terminal,
     },
     {
       title: "System Monitor",
@@ -111,6 +139,7 @@ const DATA = {
       desc: "Real-time distributed system visualizer. Aggregates metrics from multiple microservices into a single pane of glass.",
       tech: ["React", "Go"],
       link: "#",
+      icon: Monitor,
     },
     {
       title: "Hyper-LB",
@@ -118,6 +147,7 @@ const DATA = {
       desc: "Custom application-layer load balancer exploring advanced routing algorithms beyond round-robin.",
       tech: ["Go", "Networking"],
       link: "#",
+      icon: Layers,
     }
   ]
 };
@@ -325,13 +355,14 @@ const Navbar = () => (
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-      className="pointer-events-auto w-full max-w-5xl flex items-center justify-between bg-white/60 backdrop-blur-xl border border-white/50 rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-sm"
+      className="pointer-events-auto w-full max-w-5xl flex items-center justify-between bg-white/60 backdrop-blur-xl border border-white/50 rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-sm hover:shadow-md transition-shadow duration-300"
     >
       <div className="flex items-center gap-3">
         <motion.div
-          whileHover={{ rotate: 360, backgroundColor: "#6366f1" }}
+          whileHover={{ rotate: 360, backgroundColor: "#6366f1", scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           transition={{ duration: 0.6 }}
-          className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold text-sm"
+          className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold text-sm cursor-pointer"
         >
           G
         </motion.div>
@@ -341,11 +372,13 @@ const Navbar = () => (
       </div>
       <div className="flex items-center gap-3 sm:gap-4">
 
+
         <motion.a
-          whileHover={{ scale: 1.05, backgroundColor: "#0f172a" }}
+          whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(10px)" }}
           whileTap={{ scale: 0.95 }}
-          href="#"
-          className="px-3 sm:px-4 py-1.5 bg-slate-800 text-white rounded-full text-xs font-medium tracking-widest hover:bg-slate-900 transition-colors flex items-center gap-2 shadow-sm"
+          href={cvFile}
+          download="CV-gaurav.pdf"
+          className="px-3 sm:px-4 py-1.5 bg-white/20 backdrop-blur-md border border-white/40 text-slate-800 rounded-full text-xs font-medium tracking-widest hover:border-white/60 hover:shadow-lg transition-all flex items-center gap-2"
           title="Download CV"
         >
           <Download size={14} /> <span className="hidden sm:inline">CV</span>
@@ -419,53 +452,47 @@ const MiniParticleDust = ({ count = 12 }) => {
 };
 
 const TechItem = ({ item }) => {
-  const [active, setActive] = useState(false);
-  const pillStyles = getPillStyles(item.color);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      layout
-      className={`group relative flex items-center justify-center cursor-pointer z-10 shrink-0 select-none ${active
-        ? `px-4 py-1.5 rounded-full border ${pillStyles}`
-        : "w-16 h-16 rounded-2xl"
-        }`}
-      onTap={() => setActive((prev) => !prev)}
-      transition={{ layout: { duration: 0.2, type: "spring", stiffness: 300, damping: 25 } }}
-      whileHover={{ scale: 1.05 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      whileHover={{ scale: 1.2, zIndex: 50, rotate: [0, -5, 5, 0], transition: { duration: 0.3 } }}
       whileTap={{ scale: 0.95 }}
+      variants={{
+        hidden: { scale: 0, opacity: 0, y: 20 },
+        visible: { scale: 1, opacity: 1, y: 0, transition: { type: "spring", stiffness: 200, damping: 12 } }
+      }}
+      style={{ zIndex: isHovered ? 50 : 1 }}
+      className="relative flex flex-col items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 cursor-pointer shrink-0"
     >
-      <AnimatePresence mode="popLayout" initial={false}>
-        {!active ? (
+      <motion.div
+        animate={{
+          y: isHovered ? -12 : 0,
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="relative z-10 flex items-center justify-center p-2 rounded-xl bg-white/0 group-hover:bg-white/40 transition-colors duration-300"
+      >
+        <img
+          src={item.icon}
+          alt={item.name}
+          className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 object-contain drop-shadow-sm filter group-hover:drop-shadow-md transition-all"
+        />
+      </motion.div>
+
+      <AnimatePresence>
+        {isHovered && (
           <motion.div
-            key="icon"
-            className="flex items-center justify-center relative w-full h-full"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 1, scale: 1, transition: { duration: 0.4 } }} // Keep container alive
+            initial={{ opacity: 0, y: 10, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 5, scale: 0.9 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="absolute -bottom-2 flex items-center justify-center pointer-events-none z-50 min-w-max"
           >
-            <motion.img
-              src={item.icon}
-              alt={item.name}
-              className="w-9 h-9 object-contain drop-shadow-sm relative z-10"
-              exit={{ opacity: 0, scale: 0.5, filter: "blur(4px)", transition: { duration: 0.1 } }}
-            />
-            <MiniParticleDust />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="name"
-            className="flex items-center justify-center relative w-full h-full"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 1, scale: 1, transition: { duration: 0.4 } }} // Keep container alive
-          >
-            <motion.span
-              className="text-xs font-bold tracking-wide whitespace-nowrap relative z-10"
-              exit={{ opacity: 0, scale: 0.5, filter: "blur(4px)", transition: { duration: 0.1 } }}
-            >
+            <span className={`text-[10px] font-bold text-center tracking-wide whitespace-nowrap bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.1)] border border-white/50 ${item.color || 'text-slate-700'}`}>
               {item.name}
-            </motion.span>
-            <MiniParticleDust />
+            </span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -476,29 +503,34 @@ const TechItem = ({ item }) => {
 const TechCategory = ({ category, index }) => {
   const Icon = category.icon;
   return (
-    <div className="backdrop-blur-[20px] backdrop-saturate-[150%] bg-white/40 border border-white/60 rounded-3xl p-4 sm:p-6 shadow-sm h-full relative overflow-hidden group/tech flex flex-col justify-center">
+    <motion.div
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="backdrop-blur-[20px] backdrop-saturate-[150%] bg-white/40 border border-white/60 rounded-3xl p-4 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 h-full relative overflow-hidden group/tech flex flex-col justify-center"
+    >
       <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-white/0 group-hover/tech:bg-white/20 transition-colors duration-300 pointer-events-none" />
+
       <div className="flex items-center gap-2 mb-4 relative z-10 shrink-0">
         <motion.div
           animate={{ y: [0, -3, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
-          className="p-1.5 bg-white/80 rounded-lg shadow-sm text-slate-400"
+          className="p-1.5 bg-white/80 rounded-lg shadow-sm text-slate-400 group-hover/tech:text-indigo-500 group-hover/tech:scale-110 transition-all duration-300"
         >
           <Icon size={16} />
         </motion.div>
-        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">{category.category}</h4>
+        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] group-hover/tech:text-slate-600 transition-colors duration-300">{category.category}</h4>
       </div>
 
-      {/* Horizontal Scroll Container */}
+      {/* Horizontal Container (One Line, strictly no scroll) */}
       <motion.div
         layout
-        className="flex flex-nowrap items-center gap-3 sm:gap-4 overflow-x-auto pb-4 -mb-4 px-1 scrollbar-hide w-full"
+        className="flex flex-nowrap items-center gap-2 sm:gap-4 overflow-hidden w-full"
         initial="hidden"
         animate="visible"
         variants={{
           hidden: {},
           visible: {
-            transition: { staggerChildren: 0.05, delayChildren: index * 0.1 + 0.2 }
+            transition: { staggerChildren: 0.1, delayChildren: index * 0.1 + 0.2 }
           }
         }}
       >
@@ -506,20 +538,149 @@ const TechCategory = ({ category, index }) => {
           <TechItem key={item.name} item={item} />
         ))}
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
+
+// --- EXTRACTED CONTENT COMPONENTS ---
+
+const BioContent = () => (
+  <div className="w-full relative">
+    <ParticleDust count={30} direction="right" />
+    <div className="flex flex-col md:flex-row gap-6 sm:gap-8 items-center md:items-start">
+      <div className="relative shrink-0 group perspective-1000">
+
+        {/* Rotating Glow Ring - Always Visible for Blending */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="absolute -inset-4 bg-gradient-to-tr from-indigo-500/30 via-purple-500/0 to-indigo-500/30 rounded-full blur-xl"
+        />
+
+        {/* Animated Dashed Border Container - Subtle */}
+        <motion.div
+          className="absolute -inset-1 rounded-full border border-dashed border-white/30"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        />
+
+        <motion.div
+          animate={{ y: [-6, 6, -6] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          whileHover={{ scale: 1.05, rotate: 0 }}
+          whileTap={{ scale: 0.95 }}
+          className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-white/20 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.1),inset_0_0_20px_rgba(255,255,255,0.5)] border-[5px] border-white/30 overflow-hidden relative z-10 cursor-pointer ring-1 ring-white/80 transition-all duration-500"
+        >
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-tr from-indigo-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 mix-blend-overlay"
+          />
+          <motion.img
+            src={pfpImage}
+            alt="Profile"
+            className="w-full h-full object-cover rounded-full"
+            initial={{ scale: 1.15 }}
+            whileHover={{ scale: 1.25 }}
+            transition={{ duration: 0.5 }}
+          />
+        </motion.div>
+
+        {/* Status Dot */}
+        <motion.div
+          animate={{ y: [-6, 6, -6] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 w-5 h-5 bg-emerald-500 border-[3px] border-white rounded-full z-20 flex items-center justify-center pointer-events-none shadow-sm"
+        >
+          <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+        </motion.div>
+      </div>
+
+      <motion.div
+        className="flex-1 text-center md:text-left"
+        variants={textContainerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.h2
+          variants={fadeInUpVariants}
+          className="text-4xl sm:text-5xl md:text-6xl font-light text-slate-900 mb-2 sm:mb-4 tracking-tight"
+        >
+          {DATA.name.split("").map((char, i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.05 + 0.5 }}
+              className="inline-block hover:text-indigo-600 transition-colors duration-300 transform hover:scale-110 cursor-default"
+            >
+              {char}
+            </motion.span>
+          ))}
+        </motion.h2>
+
+        <motion.div
+          variants={fadeInUpVariants}
+          className="inline-block px-3 py-1 mb-4 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-medium text-slate-500 uppercase tracking-widest hover:bg-slate-200 hover:scale-105 transition-all cursor-default"
+        >
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+            {DATA.role}
+          </span>
+        </motion.div>
+
+        <motion.h3
+          variants={fadeInUpVariants}
+          className="text-xl sm:text-2xl font-semibold text-slate-700 mb-4 leading-tight tracking-tight"
+        >
+          Architecting <span className="text-slate-900 underline decoration-indigo-300/50 underline-offset-4 decoration-2">robust systems</span> with <span className="text-slate-800 font-medium italic">precision</span>.
+        </motion.h3>
+
+        <motion.p
+          variants={fadeInUpVariants}
+          className="text-slate-500 text-sm sm:text-base leading-relaxed sm:leading-loose mb-6 font-normal"
+        >
+          <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">high-concurrency systems</span> using <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">Node.js, TypeScript, and Go</span>, with a strong focus on <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">system reliability</span>.
+        </motion.p>
+
+        <motion.div
+          variants={fadeInUpVariants}
+          className="flex gap-4 justify-center md:justify-start"
+        >
+          <SocialButton icon={Github} href="https://github.com/ravdreamin" />
+          <SocialButton icon={Linkedin} href="https://linkedin.com/in/ravdreamin" />
+          <SocialButton icon={Mail} href="mailto:ravcr8r@gmail.com" />
+        </motion.div>
+      </motion.div>
+    </div>
+  </div>
+);
+
+const SkillsContent = () => (
+  <div className="w-full relative">
+    <ParticleDust count={30} direction="left" />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full content-center">
+      {DATA.skills.map((cat, i) => (
+        <motion.div
+          key={cat.category}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.1 + 0.1 }}
+        >
+          <TechCategory category={cat} index={i} />
+        </motion.div>
+      ))}
+    </div>
+  </div>
+);
 
 // 6. MAIN HUB
 const InteractiveHub = () => {
   const [activeTab, setActiveTab] = useState('bio');
   const [containerHeight, setContainerHeight] = useState('auto');
-  const contentRef = useRef(null);
+  const measureRef = useRef(null);
 
   useEffect(() => {
     const updateHeight = () => {
-      if (contentRef.current) {
-        setContainerHeight(contentRef.current.offsetHeight);
+      if (measureRef.current) {
+        setContainerHeight(measureRef.current.offsetHeight);
       }
     };
 
@@ -531,13 +692,15 @@ const InteractiveHub = () => {
 
     // Observer for smoother height updates
     const observer = new ResizeObserver(updateHeight);
-    if (contentRef.current) observer.observe(contentRef.current);
+    if (measureRef.current) observer.observe(measureRef.current);
 
     return () => {
       window.removeEventListener('resize', updateHeight);
       observer.disconnect();
     };
   }, [activeTab]);
+
+  const isFlipped = activeTab === 'stack';
 
   return (
     <motion.div
@@ -573,123 +736,49 @@ const InteractiveHub = () => {
         </div>
       </motion.div>
 
-      {/* SINGLE GLASS CONTAINER */}
-      <motion.div
-        animate={{ height: containerHeight }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className="w-full relative overflow-hidden bg-white/40 backdrop-blur-[32px] backdrop-saturate-[200%] border border-white/80 rounded-[2rem] sm:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
+      {/* Hidden Measure Container */}
+      <div
+        ref={measureRef}
+        className="absolute top-0 left-0 w-full opacity-0 pointer-events-none p-6 sm:p-8 md:p-12 border border-transparent"
+        aria-hidden="true"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent pointer-events-none" />
+        {activeTab === 'bio' ? <BioContent /> : <SkillsContent />}
+      </div>
 
-        <div ref={contentRef} className="p-6 sm:p-8 md:p-12 relative z-10">
-          <AnimatePresence mode="wait">
-            {activeTab === 'bio' ? (
-              <motion.div
-                key="bio"
-                initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)", x: 50 }}
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)", x: 0 }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.95,
-                  filter: "blur(20px)",
-                  x: 50,
-                  skewX: -5,
-                  transition: { duration: 0.4, ease: "easeIn" }
-                }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-full relative"
-              >
-                <ParticleDust count={30} direction="right" />
-                <div className="flex flex-col md:flex-row gap-6 sm:gap-8 items-center">
-                  <div className="relative shrink-0 group">
-                    <motion.div
-                      animate={{ y: [-6, 6, -6] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      whileHover={{ scale: 1.05, rotate: 3 }}
-                      className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full p-1 bg-white border border-slate-100 shadow-xl overflow-hidden relative z-10"
-                    >
-                      <img src={pfpImage} alt="Profile" className="w-full h-full object-cover rounded-full" />
-                    </motion.div>
+      {/* 3D FLIP CONTAINER */}
+      <div style={{ perspective: "1200px" }}>
+        <motion.div
+          animate={{
+            height: containerHeight,
+            rotateY: isFlipped ? 180 : 0
+          }}
+          transition={{
+            height: { type: "spring", stiffness: 100, damping: 20 },
+            rotateY: { duration: 0.6, ease: "easeInOut" }
+          }}
+          style={{ transformStyle: "preserve-3d" }}
+          className="w-full relative rounded-[2rem] sm:rounded-[3rem]"
+        >
+          {/* FRONT FACE (Bio) */}
+          <div
+            className="absolute inset-0 p-6 sm:p-8 md:p-12 w-full h-full bg-white/30 backdrop-blur-3xl backdrop-saturate-[180%] border border-white/50 rounded-[2rem] sm:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)] ring-1 ring-white/40"
+            style={{ backfaceVisibility: 'hidden' }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent pointer-events-none rounded-[2rem] sm:rounded-[3rem]" />
+            <BioContent key={activeTab} />
+          </div>
 
-                    {/* Status Dot */}
-                    <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 w-5 h-5 bg-emerald-500 border-[3px] border-white rounded-full z-20 flex items-center justify-center">
-                      <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 text-center md:text-left">
-                    <motion.h2
-                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                      className="text-4xl sm:text-5xl md:text-6xl font-light text-slate-900 mb-2 sm:mb-4 tracking-tight"
-                    >
-                      {DATA.name}
-                    </motion.h2>
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                      className="inline-block px-3 py-1 mb-4 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-medium text-slate-500 uppercase tracking-widest"
-                    >
-                      {DATA.role}
-                    </motion.div>
-                    <motion.h3
-                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                      className="text-xl sm:text-2xl font-semibold text-slate-700 mb-4 leading-tight tracking-tight"
-                    >
-                      Architecting <span className="text-slate-900">robust systems</span> with <span className="text-slate-800 font-medium">precision</span>.
-                    </motion.h3>
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-                      className="text-slate-500 text-sm sm:text-base leading-relaxed sm:leading-loose mb-6 font-normal"
-                    >
-                      <span className="font-medium text-slate-800">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800">high-concurrency systems</span> using <span className="font-medium text-slate-800">Node.js, TypeScript, and Go</span>, with a strong focus on <span className="font-medium text-slate-800">system reliability</span>.
-                    </motion.p>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-                      className="flex gap-4 justify-center md:justify-start"
-                    >
-                      <SocialButton icon={Github} href="https://github.com/ravdreamin" />
-                      <SocialButton icon={Linkedin} href="https://linkedin.com/in/ravdreamin" />
-                      <SocialButton icon={Mail} href="mailto:ravcr8r@gmail.com" />
-                    </motion.div>
-                  </div>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="stack"
-                initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)", x: -50 }}
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)", x: 0 }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.95,
-                  filter: "blur(20px)",
-                  x: -50,
-                  skewX: 5,
-                  transition: { duration: 0.4, ease: "easeIn" }
-                }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-full relative"
-              >
-                <ParticleDust count={30} direction="left" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full content-center">
-                  {DATA.skills.map((cat, i) => (
-                    <motion.div
-                      key={cat.category}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.1 + 0.1 }}
-                    >
-                      <TechCategory category={cat} index={i} />
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </motion.div>
-    </motion.div>
+          {/* BACK FACE (Skills) */}
+          <div
+            className="absolute inset-0 p-6 sm:p-8 md:p-12 w-full h-full bg-white/30 backdrop-blur-3xl backdrop-saturate-[180%] border border-white/50 rounded-[2rem] sm:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)] ring-1 ring-white/40"
+            style={{ backfaceVisibility: 'hidden', transform: "rotateY(180deg)" }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent pointer-events-none rounded-[2rem] sm:rounded-[3rem]" />
+            <SkillsContent key={activeTab} />
+          </div>
+        </motion.div>
+      </div>
+    </motion.div >
   );
 };
 
@@ -698,9 +787,10 @@ const SocialButton = ({ icon: Icon, href }) => (
     href={href}
     target="_blank"
     rel="noreferrer"
-    whileHover={{ scale: 1.15, rotate: 5, color: "#334155", borderColor: "#94a3b8" }}
+    whileHover={{ scale: 1.15, rotate: 5, backgroundColor: "#f1f5f9" }}
     whileTap={{ scale: 0.95 }}
-    className="p-3 bg-white border border-slate-100 rounded-full text-slate-400 hover:shadow-lg transition-all shadow-sm"
+    variants={{ hidden: { opacity: 0, scale: 0 }, visible: { opacity: 1, scale: 1 } }}
+    className="p-3 bg-white border border-slate-100 rounded-full text-slate-400 hover:text-slate-700 hover:border-slate-300 hover:shadow-lg transition-all shadow-sm"
   >
     <Icon size={18} />
   </motion.a>
@@ -764,31 +854,35 @@ const HorizontalScrollItem = ({ children, className, containerRef }) => {
 };
 
 // 7.1 PROJECT CARD WITH FLOATING ANIMATION
-const ProjectCard = ({ project, index }) => (
-  <FloatingCard delay={index * 0.5} className="h-full">
-    <SpotlightCard className="h-full rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 backdrop-blur-[32px] hover:shadow-2xl transition-all duration-500 border-white/40">
-      <a href={project.link} target="_blank" className="block h-full flex flex-col relative z-10">
-        <div className="flex justify-between items-start mb-6">
-          <div className="p-2.5 bg-slate-50 rounded-xl group-hover:bg-slate-100 group-hover:text-slate-900 transition-all duration-300 border border-slate-100">
-            <Server size={20} className="text-slate-400 group-hover:text-slate-900 transition-colors" />
+// 7.1 PROJECT CARD WITH FLOATING ANIMATION
+const ProjectCard = ({ project, index }) => {
+  const Icon = project.icon || Server; // Default to Server if no icon
+  return (
+    <FloatingCard delay={index * 0.5} className="h-full">
+      <SpotlightCard className="h-full rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 backdrop-blur-[32px] hover:shadow-2xl transition-all duration-500 border-white/40">
+        <a href={project.link} target="_blank" className="block h-full flex flex-col relative z-10">
+          <div className="flex justify-between items-start mb-6">
+            <div className="p-2.5 bg-slate-50 rounded-xl group-hover:bg-slate-100 group-hover:text-slate-900 transition-all duration-300 border border-slate-100">
+              <Icon size={20} className="text-slate-400 group-hover:text-slate-900 transition-colors" />
+            </div>
+            <div className="p-2 rounded-full text-slate-300 group-hover:text-slate-900 group-hover:bg-slate-100 transition-all">
+              <ArrowUpRight size={20} />
+            </div>
           </div>
-          <div className="p-2 rounded-full text-slate-300 group-hover:text-slate-900 group-hover:bg-slate-100 transition-all">
-            <ArrowUpRight size={20} />
+          <h3 className="text-xl font-medium text-slate-800 mb-2 tracking-tight transition-colors">{project.title}</h3>
+          <p className="text-slate-500 text-sm leading-relaxed mb-6">{project.desc}</p>
+          <div className="flex flex-wrap gap-2 mt-auto">
+            {project.tech.map((t) => (
+              <span key={t} className="text-[10px] font-medium text-slate-600 bg-slate-50 px-2.5 py-1 rounded-md uppercase tracking-wide border border-slate-100 group-hover:border-slate-300 group-hover:text-slate-800 group-hover:bg-white transition-colors">
+                {t}
+              </span>
+            ))}
           </div>
-        </div>
-        <h3 className="text-xl font-medium text-slate-800 mb-2 tracking-tight transition-colors">{project.title}</h3>
-        <p className="text-slate-500 text-sm leading-relaxed mb-6">{project.desc}</p>
-        <div className="flex flex-wrap gap-2 mt-auto">
-          {project.tech.map((t) => (
-            <span key={t} className="text-[10px] font-medium text-slate-600 bg-slate-50 px-2.5 py-1 rounded-md uppercase tracking-wide border border-slate-100 group-hover:border-slate-300 group-hover:text-slate-800 group-hover:bg-white transition-colors">
-              {t}
-            </span>
-          ))}
-        </div>
-      </a>
-    </SpotlightCard>
-  </FloatingCard>
-);
+        </a>
+      </SpotlightCard>
+    </FloatingCard>
+  );
+};
 
 const ContactSection = () => (
   <section id="contact" className="max-w-4xl mx-auto mb-20 sm:mb-24 scroll-mt-24">
