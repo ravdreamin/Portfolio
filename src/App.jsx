@@ -30,7 +30,7 @@ const itemVariants = {
   hidden: { y: 20, opacity: 0, filter: "blur(5px)" },
   visible: {
     y: 0, opacity: 1, filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 100 }
+    transition: { type: "spring", stiffness: 70, damping: 20, mass: 1 }
   }
 };
 
@@ -49,7 +49,6 @@ const DATA = {
       items: [
         { name: "Go", color: "text-sky-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" },
         { name: "JavaScript", color: "text-yellow-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-        { name: "TypeScript", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
         { name: "Python", color: "text-emerald-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" }
       ]
     },
@@ -94,7 +93,7 @@ const DATA = {
       title: "System Monitor",
       tag: "Observability",
       desc: "Real-time distributed system visualizer. Aggregates metrics from multiple microservices into a single pane of glass.",
-      tech: ["TS", "React", "Go"],
+      tech: ["React", "Go"],
       link: "#",
     },
     {
@@ -255,12 +254,55 @@ const FloatingCard = ({ children, className, delay = 0 }) => {
   );
 };
 
+// 4.1 PARTICLE DUST
+const ParticleDust = ({ count = 40, direction = 'right' }) => {
+  const particles = React.useMemo(() => {
+    return Array.from({ length: count }).map((_, i) => ({
+      id: i,
+      x: Math.random() * 100 + "%",
+      y: Math.random() * 100 + "%",
+      size: Math.random() * 4 + 2,
+      delay: Math.random() * 0.2
+    }));
+  }, [count]);
+
+  return (
+    <>
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute bg-white/60 rounded-full z-0 pointer-events-none"
+          style={{
+            left: p.x,
+            top: p.y,
+            width: p.size,
+            height: p.size,
+          }}
+          initial={{ opacity: 0 }}
+          exit={{
+            opacity: [0, 1, 0],
+            x: direction === 'right' ? Math.random() * 100 + 50 : -(Math.random() * 100 + 50),
+            y: (Math.random() - 0.5) * 60,
+            scale: 0,
+          }}
+          transition={{
+            duration: 0.6,
+            ease: "easeOut",
+            delay: p.delay
+          }}
+        />
+      ))}
+    </>
+  );
+};
+
 // 5. NAVBAR
 const Navbar = () => (
   <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 sm:pt-6 px-4 pointer-events-none">
     <motion.div
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
       className="pointer-events-auto w-full max-w-5xl flex items-center justify-between bg-white/60 backdrop-blur-xl border border-white/50 rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-sm"
     >
       <div className="flex items-center gap-3">
@@ -313,9 +355,9 @@ const TechCategory = ({ category }) => {
           >
             <motion.div
               variants={{
-                hover: { y: -8, scale: 1.15 }
+                hover: { y: -5, scale: 1.15 }
               }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              transition={{ type: "spring", stiffness: 200, damping: 25 }}
               className="w-10 h-10 flex items-center justify-center transition-all duration-300"
             >
               <img src={item.icon} alt={item.name} className="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
@@ -341,16 +383,12 @@ const TechCategory = ({ category }) => {
 const InteractiveHub = () => {
   const [activeTab, setActiveTab] = useState('bio');
   const [containerHeight, setContainerHeight] = useState('auto');
-  const bioRef = useRef(null);
-  const stackRef = useRef(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
-    // Update container height based on active tab
     const updateHeight = () => {
-      if (activeTab === 'bio' && bioRef.current) {
-        setContainerHeight(bioRef.current.offsetHeight);
-      } else if (activeTab === 'stack' && stackRef.current) {
-        setContainerHeight(stackRef.current.offsetHeight);
+      if (contentRef.current) {
+        setContainerHeight(contentRef.current.offsetHeight);
       }
     };
 
@@ -359,11 +397,14 @@ const InteractiveHub = () => {
 
     // Re-calculate on resize
     window.addEventListener('resize', updateHeight);
-    // Also use a timeout to let animations/rendering settle
-    const tm = setTimeout(updateHeight, 100);
+
+    // Observer for smoother height updates
+    const observer = new ResizeObserver(updateHeight);
+    if (contentRef.current) observer.observe(contentRef.current);
+
     return () => {
       window.removeEventListener('resize', updateHeight);
-      clearTimeout(tm);
+      observer.disconnect();
     };
   }, [activeTab]);
 
@@ -378,7 +419,7 @@ const InteractiveHub = () => {
         <div className="flex p-1 bg-white/40 backdrop-blur-md rounded-full border border-white/50 shadow-sm overflow-hidden w-full max-w-[300px] sm:w-auto">
           {[
             { id: 'bio', label: 'Profile', icon: User },
-            { id: 'stack', label: 'Tech Stack', icon: Wrench }
+            { id: 'stack', label: 'Skills', icon: Wrench }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -390,7 +431,7 @@ const InteractiveHub = () => {
                 <motion.div
                   layoutId="active-pill"
                   className="absolute inset-0 bg-white rounded-full shadow-sm border border-slate-100"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  transition={{ type: "spring", stiffness: 250, damping: 30 }}
                 />
               )}
               <span className="relative z-10 flex items-center gap-2">
@@ -401,114 +442,117 @@ const InteractiveHub = () => {
         </div>
       </motion.div>
 
-      <div className="relative" style={{ perspective: "2000px" }}>
-        <motion.div
-          animate={{
-            rotateY: activeTab === 'stack' ? 180 : 0,
-            height: containerHeight
-          }}
-          transition={{
-            duration: 0.8,
-            type: "spring",
-            stiffness: 40,
-            damping: 15
-          }}
-          style={{ transformStyle: "preserve-3d" }}
-          className="relative w-full"
-        >
-          {/* FRONT SIDE: Profile */}
-          <div
-            ref={bioRef}
-            style={{
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-            }}
-            className="absolute top-0 left-0 w-full"
-            aria-hidden={activeTab === 'stack'}
-          >
-            <div className="bg-white/40 backdrop-blur-[32px] backdrop-saturate-[200%] border border-white/80 rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.04)] relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent pointer-events-none" />
-              <div className="flex flex-col md:flex-row gap-6 sm:gap-8 items-center relative z-10">
-                <div className="relative shrink-0 group">
-                  <motion.div
-                    animate={{ y: [-6, 6, -6] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    whileHover={{ scale: 1.05, rotate: 3 }}
-                    className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full p-1 bg-white border border-slate-100 shadow-xl overflow-hidden relative z-10"
-                  >
-                    <img src={pfpImage} alt="Profile" className="w-full h-full object-cover rounded-full" />
-                  </motion.div>
+      {/* SINGLE GLASS CONTAINER */}
+      <motion.div
+        animate={{ height: containerHeight }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        className="w-full relative overflow-hidden bg-white/40 backdrop-blur-[32px] backdrop-saturate-[200%] border border-white/80 rounded-[2rem] sm:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent pointer-events-none" />
+
+        <div ref={contentRef} className="p-6 sm:p-8 md:p-12 relative z-10">
+          <AnimatePresence mode="wait">
+            {activeTab === 'bio' ? (
+              <motion.div
+                key="bio"
+                initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)", x: 50 }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)", x: 0 }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.95,
+                  filter: "blur(20px)",
+                  x: 50,
+                  skewX: -5,
+                  transition: { duration: 0.4, ease: "easeIn" }
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="w-full relative"
+              >
+                <ParticleDust count={30} direction="right" />
+                <div className="flex flex-col md:flex-row gap-6 sm:gap-8 items-center">
+                  <div className="relative shrink-0 group">
+                    <motion.div
+                      animate={{ y: [-6, 6, -6] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      whileHover={{ scale: 1.05, rotate: 3 }}
+                      className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full p-1 bg-white border border-slate-100 shadow-xl overflow-hidden relative z-10"
+                    >
+                      <img src={pfpImage} alt="Profile" className="w-full h-full object-cover rounded-full" />
+                    </motion.div>
+                  </div>
+
+                  <div className="flex-1 text-center md:text-left">
+                    <motion.h2
+                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                      className="text-4xl sm:text-5xl md:text-6xl font-light text-slate-900 mb-2 sm:mb-4 tracking-tight"
+                    >
+                      {DATA.name}
+                    </motion.h2>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                      className="inline-block px-3 py-1 mb-4 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-medium text-slate-500 uppercase tracking-widest"
+                    >
+                      {DATA.role}
+                    </motion.div>
+                    <motion.h3
+                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+                      className="text-xl sm:text-2xl font-semibold text-slate-700 mb-4 leading-tight tracking-tight"
+                    >
+                      Architecting <span className="text-slate-900">robust systems</span> with <span className="text-slate-800 font-medium">precision</span>.
+                    </motion.h3>
+
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+                      className="text-slate-500 text-sm sm:text-base leading-relaxed sm:leading-loose mb-6 font-normal"
+                    >
+                      <span className="font-medium text-slate-800">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800">high-concurrency systems</span> using <span className="font-medium text-slate-800">Node.js, TypeScript, and Go</span>, with a strong focus on <span className="font-medium text-slate-800">system reliability</span>.
+                    </motion.p>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+                      className="flex gap-4 justify-center md:justify-start"
+                    >
+                      <SocialButton icon={Github} href="https://github.com/ravdreamin" />
+                      <SocialButton icon={Linkedin} href="https://linkedin.com/in/ravdreamin" />
+                      <SocialButton icon={Mail} href="mailto:ravcr8r@gmail.com" />
+                    </motion.div>
+                  </div>
                 </div>
-
-                <div className="flex-1 text-center md:text-left">
-                  <motion.h2
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                    className="text-4xl sm:text-5xl md:text-6xl font-light text-slate-900 mb-2 sm:mb-4 tracking-tight"
-                  >
-                    {DATA.name}
-                  </motion.h2>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                    className="inline-block px-3 py-1 mb-4 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-medium text-slate-500 uppercase tracking-widest"
-                  >
-                    {DATA.role}
-                  </motion.div>
-                  <motion.h3
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                    className="text-xl sm:text-2xl font-semibold text-slate-700 mb-4 leading-tight tracking-tight"
-                  >
-                    Architecting <span className="text-slate-900">robust systems</span> with <span className="text-slate-800 font-medium">precision</span>.
-                  </motion.h3>
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-                    className="text-slate-500 text-sm sm:text-base leading-relaxed sm:leading-loose mb-6 font-normal"
-                  >
-                    <span className="font-medium text-slate-800">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800">high-concurrency systems</span> using <span className="font-medium text-slate-800">Node.js, TypeScript, and Go</span>, with a strong focus on <span className="font-medium text-slate-800">system reliability</span>.
-                  </motion.p>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-                    className="flex gap-4 justify-center md:justify-start"
-                  >
-                    <SocialButton icon={Github} href="https://github.com/ravdreamin" />
-                    <SocialButton icon={Linkedin} href="https://linkedin.com/in/ravdreamin" />
-                    <SocialButton icon={Mail} href="mailto:ravcr8r@gmail.com" />
-                  </motion.div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="stack"
+                initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)", x: -50 }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)", x: 0 }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.95,
+                  filter: "blur(20px)",
+                  x: -50,
+                  skewX: 5,
+                  transition: { duration: 0.4, ease: "easeIn" }
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="w-full relative"
+              >
+                <ParticleDust count={30} direction="left" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full content-center">
+                  {DATA.skills.map((cat, i) => (
+                    <motion.div
+                      key={cat.category}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 + 0.1 }}
+                    >
+                      <TechCategory category={cat} index={i} />
+                    </motion.div>
+                  ))}
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* BACK SIDE: Tech Stack */}
-          <div
-            ref={stackRef}
-            style={{
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-              transform: "rotateY(180deg)",
-            }}
-            className="absolute top-0 left-0 w-full"
-            aria-hidden={activeTab === 'bio'}
-          >
-            <div className="bg-white/40 backdrop-blur-[32px] backdrop-saturate-[200%] border border-white/80 rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.04)] h-full relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent pointer-events-none" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full content-center">
-                {DATA.skills.map((cat, i) => (
-                  <motion.div
-                    key={cat.category}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={activeTab === 'stack' ? { opacity: 1, y: 0 } : { opacity: 0 }}
-                    transition={{ delay: i * 0.1 + 0.4 }}
-                  >
-                    <TechCategory category={cat} index={i} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
     </motion.div>
   );
 };
@@ -660,8 +704,8 @@ export default function App() {
       <SlimeBackground />
       <Navbar />
 
-      <main className="max-w-5xl mx-auto px-6 pt-32 pb-20 relative z-10">
-        <div className="h-10"></div>
+      <main className="max-w-5xl mx-auto px-6 pt-24 md:pt-32 pb-20 relative z-10">
+        <div className="hidden md:block h-10"></div>
         <InteractiveHub />
         <section className="mb-24">
           <motion.div
