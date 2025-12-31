@@ -33,7 +33,7 @@ const RevealOnScroll = ({ children, delay = 0, className = "" }) => (
 
 // --- ASSETS ---
 import pfpImage from './assets/pfp1.jpeg';
-import cvFile from './assets/CV-gaurav.pdf';
+import cvFile from './assets/CV.pdf';
 
 // --- ANIMATION VARIANTS ---
 const containerVariants = {
@@ -377,7 +377,7 @@ const Navbar = () => (
           whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(10px)" }}
           whileTap={{ scale: 0.95 }}
           href={cvFile}
-          download="CV-gaurav.pdf"
+          download="CV.pdf"
           className="px-3 sm:px-4 py-1.5 bg-white/20 backdrop-blur-md border border-white/40 text-slate-800 rounded-full text-xs font-medium tracking-widest hover:border-white/60 hover:shadow-lg transition-all flex items-center gap-2"
           title="Download CV"
         >
