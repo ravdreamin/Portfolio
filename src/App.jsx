@@ -505,10 +505,10 @@ const TechCategory = ({ category, index }) => {
   return (
     <motion.div
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="backdrop-blur-[20px] backdrop-saturate-[150%] bg-white/40 border border-white/60 rounded-3xl p-4 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 h-full relative overflow-hidden group/tech flex flex-col justify-center"
+      className="backdrop-blur-[20px] backdrop-saturate-[150%] bg-white/40 border border-white/60 rounded-3xl p-4 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 h-full relative group/tech flex flex-col justify-center"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-white/0 group-hover/tech:bg-white/20 transition-colors duration-300 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none rounded-3xl" />
+      <div className="absolute inset-0 bg-white/0 group-hover/tech:bg-white/20 transition-colors duration-300 pointer-events-none rounded-3xl" />
 
       <div className="flex items-center gap-2 mb-4 relative z-10 shrink-0">
         <motion.div
@@ -524,7 +524,7 @@ const TechCategory = ({ category, index }) => {
       {/* Horizontal Container (One Line, strictly no scroll) */}
       <motion.div
         layout
-        className="flex flex-nowrap items-center gap-2 sm:gap-4 overflow-hidden w-full"
+        className="flex flex-nowrap items-center gap-2 sm:gap-4 w-full"
         initial="hidden"
         animate="visible"
         variants={{
