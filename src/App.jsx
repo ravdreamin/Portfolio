@@ -99,8 +99,8 @@ const DATA = {
       category: "Backend",
       icon: Server,
       items: [
-        { name: "Node.js", color: "text-green-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-        { name: "Express", color: "text-gray-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+
+        { name: "gRPC", color: "text-cyan-500", icon: "https://raw.githubusercontent.com/cncf/artwork/master/projects/grpc/icon/color/grpc-icon-color.svg" },
         { name: "Gin", color: "text-sky-400", icon: "https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" },
       ]
     },
@@ -110,7 +110,8 @@ const DATA = {
       items: [
         { name: "Docker", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
         { name: "Kubernetes", color: "text-blue-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
-        { name: "AWS", color: "text-orange-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
+
+        { name: "Prometheus", color: "text-orange-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" },
         { name: "Terraform", color: "text-purple-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" }
       ]
     },
@@ -119,33 +120,35 @@ const DATA = {
       icon: Database,
       items: [
         { name: "PostgreSQL", color: "text-blue-400", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-        { name: "MongoDB", color: "text-green-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
         { name: "Redis", color: "text-red-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" }
       ]
     }
   ],
   projects: [
     {
-      title: "SRE-Pilot",
+      title: "Aegis | SRE-PILOT",
+      status: "finished",
       tag: "Featured",
-      desc: "A production-grade backend service implementing core SRE patterns: circuit breakers, structured logging, and graceful degradation.",
+      desc: "A resilient backend service implementing core SRE patterns: circuit breakers, rate limiting, and structured logging.",
       tech: ["Go", "Docker", "REST"],
       link: "https://sre-pilot.onrender.com",
-      icon: Terminal,
+      icon: Shield,
     },
     {
-      title: "System Monitor",
-      tag: "Observability",
-      desc: "Real-time distributed system visualizer. Aggregates metrics from multiple microservices into a single pane of glass.",
-      tech: ["React", "Go"],
+      title: "Sentinel",
+      status: "working",
+      tag: "Automation",
+      desc: "High-throughput concurrent web scraper built with Go, featuring distributed crawling and polite rate limiting.",
+      tech: ["Go", "Concurrency", "Colly"],
       link: "#",
-      icon: Monitor,
+      icon: Activity,
     },
     {
-      title: "Hyper-LB",
+      title: "Arbiter L7 LB",
+      status: "upcoming",
       tag: "Infrastructure",
-      desc: "Custom application-layer load balancer exploring advanced routing algorithms beyond round-robin.",
-      tech: ["Go", "Networking"],
+      desc: "Custom Layer 7 load balancer exploring advanced routing algorithms (Weighted Round Robin, Least Connections) and health checks.",
+      tech: ["Go", "Networking", "Distributed Systems"],
       link: "#",
       icon: Layers,
     }
@@ -637,7 +640,7 @@ const BioContent = () => (
           variants={fadeInUpVariants}
           className="text-slate-500 text-sm sm:text-base leading-relaxed sm:leading-loose mb-6 font-normal"
         >
-          <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">high-concurrency systems</span> using <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">Node.js, TypeScript, and Go</span>, with a strong focus on <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">system reliability</span>.
+          <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">high-concurrency systems</span> using <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">Node.js and Go</span>, with a strong focus on <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">system reliability</span>.
         </motion.p>
 
         <motion.div
@@ -853,7 +856,43 @@ const HorizontalScrollItem = ({ children, className, containerRef }) => {
   );
 };
 
-// 7.1 PROJECT CARD WITH FLOATING ANIMATION
+// 7.1 STATUS BADGE
+const StatusBadge = ({ status }) => {
+  const styles = {
+    finished: {
+      bg: "bg-emerald-50",
+      text: "text-emerald-700",
+      border: "border-emerald-200",
+      dot: "bg-emerald-500",
+      label: "Finished"
+    },
+    working: {
+      bg: "bg-amber-50",
+      text: "text-amber-700",
+      border: "border-amber-200",
+      dot: "bg-amber-500",
+      label: "In Progress"
+    },
+    upcoming: {
+      bg: "bg-slate-50",
+      text: "text-slate-600",
+      border: "border-slate-200",
+      dot: "bg-slate-400",
+      label: "Upcoming"
+    }
+  };
+
+  const config = styles[status] || styles.upcoming;
+
+  return (
+    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${config.bg} ${config.border} ${config.text} text-[10px] font-bold uppercase tracking-wider shadow-sm`}>
+      <div className={`w-1.5 h-1.5 rounded-full ${config.dot} ${status === 'working' ? 'animate-pulse' : ''}`} />
+      {config.label}
+    </div>
+  );
+};
+
+// 7.2 PROJECT CARD WITH FLOATING ANIMATION
 // 7.1 PROJECT CARD WITH FLOATING ANIMATION
 const ProjectCard = ({ project, index }) => {
   const Icon = project.icon || Server; // Default to Server if no icon
@@ -862,8 +901,11 @@ const ProjectCard = ({ project, index }) => {
       <SpotlightCard className="h-full rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 backdrop-blur-[32px] hover:shadow-2xl transition-all duration-500 border-white/40">
         <a href={project.link} target="_blank" className="block h-full flex flex-col relative z-10">
           <div className="flex justify-between items-start mb-6">
-            <div className="p-2.5 bg-slate-50 rounded-xl group-hover:bg-slate-100 group-hover:text-slate-900 transition-all duration-300 border border-slate-100">
-              <Icon size={20} className="text-slate-400 group-hover:text-slate-900 transition-colors" />
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-slate-50 rounded-xl group-hover:bg-slate-100 group-hover:text-slate-900 transition-all duration-300 border border-slate-100">
+                <Icon size={20} className="text-slate-400 group-hover:text-slate-900 transition-colors" />
+              </div>
+              <StatusBadge status={project.status} />
             </div>
             <div className="p-2 rounded-full text-slate-300 group-hover:text-slate-900 group-hover:bg-slate-100 transition-all">
               <ArrowUpRight size={20} />
