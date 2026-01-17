@@ -127,7 +127,7 @@ const DATA = {
   projects: [
     {
       title: "Aegis | SRE-PILOT",
-      status: "finished",
+      status: "running",
       tag: "Featured",
       desc: "A resilient backend service implementing core SRE patterns: circuit breakers, rate limiting, and structured logging.",
       tech: ["Go", "Docker", "REST"],
@@ -859,12 +859,12 @@ const HorizontalScrollItem = ({ children, className, containerRef }) => {
 // 7.1 STATUS BADGE
 const StatusBadge = ({ status }) => {
   const styles = {
-    finished: {
+    running: {
       bg: "bg-emerald-50",
       text: "text-emerald-700",
       border: "border-emerald-200",
       dot: "bg-emerald-500",
-      label: "Finished"
+      label: "Running"
     },
     working: {
       bg: "bg-amber-50",
