@@ -100,8 +100,8 @@ const DATA = {
       icon: Server,
       items: [
 
-        { name: "gRPC", color: "text-cyan-500", icon: "https://raw.githubusercontent.com/cncf/artwork/master/projects/grpc/icon/color/grpc-icon-color.svg" },
-        { name: "Gin", color: "text-sky-400", icon: "https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" },
+        { name: "gRPC", color: "text-cyan-600", icon: "https://raw.githubusercontent.com/cncf/artwork/master/projects/grpc/icon/color/grpc-icon-color.svg" },
+        { name: "Gin", color: "text-sky-600", icon: "https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" },
       ]
     },
     {
@@ -111,7 +111,7 @@ const DATA = {
         { name: "Docker", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
         { name: "Kubernetes", color: "text-blue-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
 
-        { name: "Prometheus", color: "text-orange-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" },
+        { name: "Prometheus", color: "text-orange-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" },
         { name: "Terraform", color: "text-purple-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" }
       ]
     },
@@ -119,7 +119,7 @@ const DATA = {
       category: "Database & Store",
       icon: Database,
       items: [
-        { name: "PostgreSQL", color: "text-blue-400", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+        { name: "PostgreSQL", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
         { name: "Redis", color: "text-red-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" }
       ]
     }
@@ -183,7 +183,7 @@ const HeadManager = () => {
       link.type = 'image/svg+xml';
       link.rel = 'icon';
       // Pastel Blue Box with White G
-      link.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23a5b4fc%22 rx=%2220%22/><text x=%2250%22 y=%2250%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22 font-size=%2260%22>G</text></svg>`;
+      link.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%232563eb%22 rx=%2220%22/><text x=%2250%22 y=%2250%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22 font-size=%2260%22>G</text></svg>`;
       document.getElementsByTagName('head')[0].appendChild(link);
     };
     setFavicon();
@@ -194,7 +194,7 @@ const HeadManager = () => {
 // 2. SLIME BACKGROUND (OPTIMIZED)
 const SlimeBackground = () => {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-[#fafafa]">
+    <div className="fixed inset-0 -z-10 overflow-hidden bg-[#f0f4f9]">
       {/* Dynamic Flow Elements - Removed backdrop-blur for performance */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(4)].map((_, i) => (
@@ -227,19 +227,19 @@ const SlimeBackground = () => {
           animate={{ x: [-40, 40, -40], y: [-30, 30, -30], scale: [1, 1.2, 1] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           style={{ willChange: "transform" }}
-          className="absolute top-[20%] left-[25%] w-[60vw] h-[60vw] md:w-[320px] md:h-[320px] bg-indigo-600/50 rounded-full mix-blend-multiply"
+          className="absolute top-[20%] left-[25%] w-[60vw] h-[60vw] md:w-[320px] md:h-[320px] bg-blue-600/40 rounded-full mix-blend-multiply"
         />
         <motion.div
           animate={{ x: [40, -40, 40], y: [30, -30, 30], scale: [1.2, 0.9, 1.2] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           style={{ willChange: "transform" }}
-          className="absolute top-[40%] right-[25%] w-[65vw] h-[65vw] md:w-[350px] md:h-[350px] bg-sky-500/50 rounded-full mix-blend-multiply"
+          className="absolute top-[40%] right-[25%] w-[65vw] h-[65vw] md:w-[350px] md:h-[350px] bg-cyan-500/40 rounded-full mix-blend-multiply"
         />
         <motion.div
           animate={{ y: [60, -60, 60], scale: [1, 1.3, 1] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           style={{ willChange: "transform" }}
-          className="absolute bottom-[20%] left-[40%] w-[60vw] h-[60vw] md:w-[330px] md:h-[330px] bg-rose-500/50 rounded-full mix-blend-multiply"
+          className="absolute bottom-[20%] left-[40%] w-[60vw] h-[60vw] md:w-[330px] md:h-[330px] bg-indigo-500/40 rounded-full mix-blend-multiply"
         />
         <motion.div
           animate={{ x: [-50, 50, -50], scale: [0.9, 1.1, 0.9] }}
@@ -362,10 +362,10 @@ const Navbar = () => (
     >
       <div className="flex items-center gap-3">
         <motion.div
-          whileHover={{ rotate: 360, backgroundColor: "#6366f1", scale: 1.1 }}
+          whileHover={{ rotate: 360, backgroundColor: "#2563eb", scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           transition={{ duration: 0.6 }}
-          className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold text-sm cursor-pointer"
+          className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer"
         >
           G
         </motion.div>
@@ -393,21 +393,21 @@ const Navbar = () => (
 
 const getPillStyles = (colorClass) => {
   const colorMap = {
-    'text-sky-500': 'bg-sky-50 text-sky-700 border-sky-200',
-    'text-yellow-500': 'bg-yellow-50 text-yellow-700 border-yellow-200',
-    'text-blue-500': 'bg-blue-50 text-blue-700 border-blue-200',
-    'text-emerald-500': 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    'text-green-600': 'bg-green-50 text-green-700 border-green-200',
-    'text-gray-600': 'bg-gray-50 text-gray-700 border-gray-200',
-    'text-sky-400': 'bg-sky-50 text-sky-700 border-sky-200',
-    'text-blue-600': 'bg-blue-50 text-blue-700 border-blue-200',
-    'text-orange-500': 'bg-orange-50 text-orange-700 border-orange-200',
-    'text-purple-500': 'bg-purple-50 text-purple-700 border-purple-200',
-    'text-blue-400': 'bg-blue-50 text-blue-700 border-blue-200',
-    'text-green-500': 'bg-green-50 text-green-700 border-green-200',
-    'text-red-500': 'bg-red-50 text-red-700 border-red-200',
+    'text-sky-500': 'bg-sky-100 text-sky-800 border-sky-300 font-medium',
+    'text-yellow-500': 'bg-amber-100 text-amber-800 border-amber-300 font-medium',
+    'text-blue-500': 'bg-blue-100 text-blue-800 border-blue-300 font-medium',
+    'text-emerald-500': 'bg-emerald-100 text-emerald-800 border-emerald-300 font-medium',
+    'text-green-600': 'bg-green-100 text-green-800 border-green-300 font-medium',
+    'text-gray-600': 'bg-slate-100 text-slate-800 border-slate-300 font-medium',
+    'text-sky-400': 'bg-sky-100 text-sky-800 border-sky-300 font-medium',
+    'text-blue-600': 'bg-blue-100 text-blue-800 border-blue-300 font-medium',
+    'text-orange-500': 'bg-orange-100 text-orange-800 border-orange-300 font-medium',
+    'text-purple-500': 'bg-purple-100 text-purple-800 border-purple-300 font-medium',
+    'text-blue-400': 'bg-blue-100 text-blue-800 border-blue-300 font-medium',
+    'text-green-500': 'bg-emerald-100 text-emerald-800 border-emerald-300 font-medium',
+    'text-red-500': 'bg-red-100 text-red-800 border-red-300 font-medium',
   };
-  return colorMap[colorClass] || 'bg-slate-50 text-slate-700 border-slate-200';
+  return colorMap[colorClass] || 'bg-slate-100 text-slate-800 border-slate-300 font-medium';
 };
 
 // 4.2 MINI PARTICLE DUST (For Icons)
@@ -517,7 +517,7 @@ const TechCategory = ({ category, index }) => {
         <motion.div
           animate={{ y: [0, -3, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
-          className="p-1.5 bg-white/80 rounded-lg shadow-sm text-slate-400 group-hover/tech:text-indigo-500 group-hover/tech:scale-110 transition-all duration-300"
+          className="p-1.5 bg-white/80 rounded-lg shadow-sm text-slate-400 group-hover/tech:text-blue-600 group-hover/tech:scale-110 transition-all duration-300"
         >
           <Icon size={16} />
         </motion.div>
@@ -557,7 +557,7 @@ const BioContent = () => (
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          className="absolute -inset-4 bg-gradient-to-tr from-indigo-500/30 via-purple-500/0 to-indigo-500/30 rounded-full blur-xl"
+          className="absolute -inset-4 bg-gradient-to-tr from-blue-500/30 via-cyan-500/0 to-blue-500/30 rounded-full blur-xl"
         />
 
         {/* Animated Dashed Border Container - Subtle */}
@@ -575,7 +575,7 @@ const BioContent = () => (
           className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-white/20 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.1),inset_0_0_20px_rgba(255,255,255,0.5)] border-[5px] border-white/30 overflow-hidden relative z-10 cursor-pointer ring-1 ring-white/80 transition-all duration-500"
         >
           <motion.div
-            className="absolute inset-0 bg-gradient-to-tr from-indigo-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 mix-blend-overlay"
+            className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 mix-blend-overlay"
           />
           <motion.img
             src={pfpImage}
@@ -591,9 +591,9 @@ const BioContent = () => (
         <motion.div
           animate={{ y: [-6, 6, -6] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 w-5 h-5 bg-emerald-500 border-[3px] border-white rounded-full z-20 flex items-center justify-center pointer-events-none shadow-sm"
+          className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 w-5 h-5 bg-blue-600 border-[3px] border-white rounded-full z-20 flex items-center justify-center pointer-events-none shadow-sm"
         >
-          <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+          <div className="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-75"></div>
         </motion.div>
       </div>
 
@@ -613,7 +613,7 @@ const BioContent = () => (
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.05 + 0.5 }}
-              className="inline-block hover:text-indigo-600 transition-colors duration-300 transform hover:scale-110 cursor-default"
+              className="inline-block hover:text-blue-600 transition-colors duration-300 transform hover:scale-110 cursor-default"
             >
               {char}
             </motion.span>
@@ -624,7 +624,7 @@ const BioContent = () => (
           variants={fadeInUpVariants}
           className="inline-block px-3 py-1 mb-4 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-medium text-slate-500 uppercase tracking-widest hover:bg-slate-200 hover:scale-105 transition-all cursor-default"
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600">
             {DATA.role}
           </span>
         </motion.div>
@@ -633,14 +633,14 @@ const BioContent = () => (
           variants={fadeInUpVariants}
           className="text-xl sm:text-2xl font-semibold text-slate-700 mb-4 leading-tight tracking-tight"
         >
-          Architecting <span className="text-slate-900 underline decoration-indigo-300/50 underline-offset-4 decoration-2">robust systems</span> with <span className="text-slate-800 font-medium italic">precision</span>.
+          Architecting <span className="text-slate-900 underline decoration-blue-300/50 underline-offset-4 decoration-2">robust systems</span> with <span className="text-slate-800 font-medium italic">precision</span>.
         </motion.h3>
 
         <motion.p
           variants={fadeInUpVariants}
           className="text-slate-500 text-sm sm:text-base leading-relaxed sm:leading-loose mb-6 font-normal"
         >
-          <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">high-concurrency systems</span> using <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">Node.js and Go</span>, with a strong focus on <span className="font-medium text-slate-800 hover:text-indigo-600 transition-colors">system reliability</span>.
+          <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">high-concurrency systems</span> using <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">Node.js and Go</span>, with a strong focus on <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">system reliability</span>.
         </motion.p>
 
         <motion.div
@@ -722,12 +722,12 @@ const InteractiveHub = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`relative flex-1 sm:flex-none px-4 sm:px-6 py-2 rounded-full text-sm font-bold tracking-tight transition-all duration-300 outline-none flex items-center justify-center gap-2
-                ${activeTab === tab.id ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}
+                ${activeTab === tab.id ? 'text-white' : 'text-slate-400 hover:text-slate-600'}`}
             >
               {activeTab === tab.id && (
                 <motion.div
                   layoutId="active-pill"
-                  className="absolute inset-0 bg-white rounded-full shadow-sm border border-slate-100"
+                  className="absolute inset-0 bg-blue-600 rounded-full shadow-md border border-blue-500"
                   transition={{ type: "spring", stiffness: 250, damping: 30 }}
                 />
               )}
@@ -860,24 +860,24 @@ const HorizontalScrollItem = ({ children, className, containerRef }) => {
 const StatusBadge = ({ status }) => {
   const styles = {
     running: {
-      bg: "bg-emerald-50",
-      text: "text-emerald-700",
-      border: "border-emerald-200",
-      dot: "bg-emerald-500",
+      bg: "bg-emerald-100",
+      text: "text-emerald-800",
+      border: "border-emerald-300",
+      dot: "bg-emerald-600",
       label: "Running"
     },
     working: {
-      bg: "bg-amber-50",
-      text: "text-amber-700",
-      border: "border-amber-200",
-      dot: "bg-amber-500",
+      bg: "bg-amber-100",
+      text: "text-amber-800",
+      border: "border-amber-300",
+      dot: "bg-amber-600",
       label: "In Progress"
     },
     upcoming: {
-      bg: "bg-slate-50",
-      text: "text-slate-600",
-      border: "border-slate-200",
-      dot: "bg-slate-400",
+      bg: "bg-slate-100",
+      text: "text-slate-800",
+      border: "border-slate-300",
+      dot: "bg-slate-500",
       label: "Upcoming"
     }
   };
@@ -915,7 +915,7 @@ const ProjectCard = ({ project, index }) => {
           <p className="text-slate-500 text-sm leading-relaxed mb-6">{project.desc}</p>
           <div className="flex flex-wrap gap-2 mt-auto">
             {project.tech.map((t) => (
-              <span key={t} className="text-[10px] font-medium text-slate-600 bg-slate-50 px-2.5 py-1 rounded-md uppercase tracking-wide border border-slate-100 group-hover:border-slate-300 group-hover:text-slate-800 group-hover:bg-white transition-colors">
+              <span key={t} className="text-[10px] font-medium text-slate-600 bg-slate-50 px-2.5 py-1 rounded-md uppercase tracking-wide border border-slate-100 group-hover:border-blue-200 group-hover:text-blue-700 group-hover:bg-blue-50 transition-colors">
                 {t}
               </span>
             ))}
@@ -982,7 +982,7 @@ const ContactSection = () => (
           </div>
         </div>
         <form className="space-y-3 md:space-y-4">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-1 md:gap-4">
+          <div className="grid grid-cols-1 gap-3 md:gap-4">
             {['Name', 'Email'].map((placeholder, i) => (
               <motion.div
                 key={placeholder}
@@ -995,7 +995,7 @@ const ContactSection = () => (
                   whileFocus={{ scale: 1.01, backgroundColor: "#ffffff" }}
                   type={placeholder === 'Email' ? 'email' : 'text'}
                   placeholder={placeholder}
-                  className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-100 focus:border-slate-300 transition-all hover:bg-white/80 text-sm"
+                  className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all hover:bg-white/80 text-sm"
                 />
               </motion.div>
             ))}
@@ -1010,13 +1010,13 @@ const ContactSection = () => (
               whileFocus={{ scale: 1.01, backgroundColor: "#ffffff" }}
               rows={3}
               placeholder="Message"
-              className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-100 focus:border-slate-300 transition-all resize-none hover:bg-white/80 text-sm"
+              className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all resize-none hover:bg-white/80 text-sm"
             />
           </motion.div>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full py-3 bg-slate-800 text-white font-medium rounded-xl hover:bg-slate-700 shadow-lg shadow-slate-400/20 flex items-center justify-center gap-2 text-sm"
+            className="w-full py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-sm"
           >
             <Send size={18} /> Send Message
           </motion.button>
