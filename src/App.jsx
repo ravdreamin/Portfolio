@@ -91,8 +91,7 @@ const DATA = {
       icon: Code2,
       items: [
         { name: "Go", color: "text-sky-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" },
-        { name: "JavaScript", color: "text-yellow-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-        { name: "Python", color: "text-emerald-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" }
+        { name: "JavaScript", color: "text-yellow-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" }
       ]
     },
     {
@@ -100,7 +99,8 @@ const DATA = {
       icon: Server,
       items: [
 
-        { name: "gRPC", color: "text-cyan-600", icon: "https://raw.githubusercontent.com/cncf/artwork/master/projects/grpc/icon/color/grpc-icon-color.svg" },
+        { name: "Node.js", color: "text-green-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+        { name: "REST", color: "text-emerald-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" },
         { name: "Gin", color: "text-sky-600", icon: "https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" },
       ]
     },
@@ -111,8 +111,7 @@ const DATA = {
         { name: "Docker", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
         { name: "Kubernetes", color: "text-blue-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
 
-        { name: "Prometheus", color: "text-orange-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" },
-        { name: "Terraform", color: "text-purple-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" }
+        { name: "Prometheus", color: "text-orange-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" }
       ]
     },
     {
@@ -120,40 +119,43 @@ const DATA = {
       icon: Database,
       items: [
         { name: "PostgreSQL", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-        { name: "Redis", color: "text-red-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" }
+        { name: "MongoDB", color: "text-green-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" }
       ]
     }
   ],
   projects: [
     {
-      title: "Aegis | SRE-PILOT",
+      title: "QryPilot",
       status: "running",
       tag: "Featured",
-      desc: "A resilient backend service implementing core SRE patterns: circuit breakers, rate limiting, and structured logging.",
-      tech: ["Go", "Docker", "REST"],
-      link: "https://sre-pilot.onrender.com",
-      icon: Shield,
+      desc: "Prometheus queries, humanized. Talk to your infrastructure in plain English and get PromQL back powered by Groq AI.",
+      tech: ["Go", "Groq AI", "Prometheus"],
+      link: "https://qrypilot.onrender.com/",
+      github: "https://github.com/ravdreamin/QryPilot",
+      icon: Terminal,
     },
     {
       title: "Sentinel",
-      status: "working",
+      status: "running",
       tag: "Automation",
       desc: "High-throughput concurrent web scraper built with Go, featuring distributed crawling and polite rate limiting.",
       tech: ["Go", "Concurrency", "Colly"],
-      link: "#",
+      link: "https://sentinel-frontend-76am.onrender.com/",
       icon: Activity,
     },
     {
-      title: "Arbiter L7 LB",
-      status: "upcoming",
-      tag: "Infrastructure",
-      desc: "Custom Layer 7 load balancer exploring advanced routing algorithms (Weighted Round Robin, Least Connections) and health checks.",
-      tech: ["Go", "Networking", "Distributed Systems"],
-      link: "#",
+      title: "URL Shortener",
+      tag: "Tool",
+      desc: "A minimal, high-performance URL shortener service built with Go.",
+      tech: ["Go", "Docker"],
+      link: "https://url-shortener-s0ck.onrender.com/",
+      github: "https://github.com/ravdreamin/URL-Shortener/",
       icon: Layers,
     }
   ],
-  achievements: []
+  achievements: [
+    "Achieved 20,000-URL concurrent scrape in ~50 seconds with fault-tolerant handling of dead endpoints and persisted results under load"
+  ]
 };
 
 // --- UTILITIES / HOOKS ---
@@ -607,9 +609,20 @@ const AchievementsContent = () => (
       </div>
       <div>
         <h3 className="text-lg font-medium text-neutral-900">Achievements & contributions</h3>
-        <p className="text-neutral-500 text-sm max-w-xs mx-auto mt-1">
-          I'm currently working on some exciting open-source contributions. Stay tuned!
-        </p>
+        {DATA.achievements.length > 0 ? (
+          <ul className="text-neutral-600 text-sm max-w-2xl mx-auto mt-4 text-left space-y-3">
+            {DATA.achievements.map((item, i) => (
+              <li key={i} className="flex gap-3 items-start">
+                <span className="text-blue-600 font-bold mt-1.5 h-1.5 w-1.5 rounded-full bg-blue-600 shrink-0"></span>
+                <span className="leading-relaxed">{item}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-neutral-500 text-sm max-w-xs mx-auto mt-1">
+            I'm currently working on some exciting open-source contributions. Stay tuned!
+          </p>
+        )}
       </div>
     </div>
   </div>
@@ -703,6 +716,13 @@ const StatusBadge = ({ status }) => {
       dot: "bg-amber-600",
       label: "In Progress"
     },
+    complete: {
+      bg: "bg-blue-100",
+      text: "text-blue-800",
+      border: "border-blue-300",
+      dot: "bg-blue-600",
+      label: "Completed"
+    },
     upcoming: {
       bg: "bg-slate-100",
       text: "text-slate-800",
@@ -729,20 +749,41 @@ const ProjectCard = ({ project, index }) => {
   return (
     <FloatingCard delay={index * 0.5} className="h-full">
       <SpotlightCard className="h-full rounded-2xl p-6 sm:p-8 transition-all duration-300">
-        <a href={project.link} target="_blank" className="block h-full flex flex-col relative z-10">
+        <div className="block h-full flex flex-col relative z-10">
           <div className="flex justify-between items-start mb-6">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-neutral-100 rounded-xl group-hover:bg-neutral-200 transition-all duration-300 border border-neutral-200/60">
                 <Icon size={18} className="text-neutral-500 group-hover:text-neutral-900 transition-colors" />
               </div>
-              <StatusBadge status={project.status} />
+              {project.status && <StatusBadge status={project.status} />}
             </div>
-            <div className="p-2 rounded-full text-neutral-300 group-hover:text-blue-600 transition-all">
-              <ArrowUpRight size={18} />
+            <div className="flex gap-2">
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-2 rounded-full text-neutral-300 hover:text-neutral-900 hover:bg-neutral-100 transition-all z-20"
+                  title="View Code"
+                >
+                  <Github size={18} />
+                </a>
+              )}
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 rounded-full text-neutral-300 hover:text-blue-600 hover:bg-neutral-100 transition-all z-20"
+                title="Live Demo"
+              >
+                <ArrowUpRight size={18} />
+              </a>
             </div>
           </div>
-          <h3 className="text-lg font-semibold text-neutral-900 mb-2 tracking-tight">{project.title}</h3>
-          <p className="text-neutral-500 text-sm leading-relaxed mb-6">{project.desc}</p>
+          <a href={project.link} target="_blank" rel="noreferrer" className="block group/title">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-2 tracking-tight group-hover/title:text-blue-600 transition-colors">{project.title}</h3>
+            <p className="text-neutral-500 text-sm leading-relaxed mb-6">{project.desc}</p>
+          </a>
           <div className="flex flex-wrap gap-2 mt-auto">
             {project.tech.map((t) => (
               <span key={t} className="mono text-[10px] font-medium text-neutral-500 bg-neutral-100 px-2.5 py-1 rounded-md uppercase tracking-wide border border-neutral-200/60 group-hover:text-blue-600 group-hover:bg-blue-50 group-hover:border-blue-200 transition-colors">
@@ -750,7 +791,7 @@ const ProjectCard = ({ project, index }) => {
               </span>
             ))}
           </div>
-        </a>
+        </div>
       </SpotlightCard>
     </FloatingCard>
   );
