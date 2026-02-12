@@ -14,7 +14,7 @@ import {
   Github, Linkedin, Mail, ArrowUpRight,
   Server, Database, Code2, Layers, Wrench,
   User, Download, Activity, Terminal, Cloud,
-  Monitor, Archive, Shield
+  Monitor, Archive, Shield, Book, Film
 } from 'lucide-react';
 
 // --- UTILS ---
@@ -33,7 +33,7 @@ const RevealOnScroll = ({ children, delay = 0, className = "" }) => (
 
 // --- ASSETS ---
 import pfpImage from './assets/pfp1.jpeg';
-import cvFile from './assets/CV.pdf';
+import cvFile from './assets/CV-gaurav.pdf';
 
 // --- ANIMATION VARIANTS ---
 const containerVariants = {
@@ -80,17 +80,17 @@ const itemVariants = {
 // --- DATA ---
 const DATA = {
   name: "Gaurav",
-  role: "Backend Engineer & SRE",
-  bio: "Backend-focused engineer building production-style services. I specialize in high-concurrency systems using Node.js, TypeScript, and Go, with a strong focus on system reliability and observability.",
+  role: "Full Stack Engineer",
+  bio: "Full Stack engineer building scalable web applications and services. I specialize in both frontend and backend technologies, delivering production-ready solutions with Go, Node.js, and React.",
   location: "Chandigarh, India",
   phone: "+91 62395 22610",
   phoneRaw: "6239522610",
   skills: [
     {
-      category: "Languages",
-      icon: Code2,
+      category: "Frontend",
+      icon: Monitor,
       items: [
-        { name: "Go", color: "text-sky-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" },
+        { name: "React", color: "text-blue-400", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
         { name: "JavaScript", color: "text-yellow-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" }
       ]
     },
@@ -98,32 +98,49 @@ const DATA = {
       category: "Backend",
       icon: Server,
       items: [
-
         { name: "Node.js", color: "text-green-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-        { name: "REST", color: "text-emerald-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" },
-        { name: "Gin", color: "text-sky-600", icon: "https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" },
+        { name: "Express", color: "text-gray-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+        { name: "Go", color: "text-sky-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" },
+        { name: "Gin", color: "text-sky-600", icon: "https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" }
       ]
     },
     {
-      category: "DevOps & Cloud",
-      icon: Cloud,
-      items: [
-        { name: "Docker", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-        { name: "Kubernetes", color: "text-blue-600", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
-
-        { name: "Prometheus", color: "text-orange-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" }
-      ]
-    },
-    {
-      category: "Database & Store",
+      category: "Database",
       icon: Database,
       items: [
         { name: "PostgreSQL", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
         { name: "MongoDB", color: "text-green-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" }
       ]
+    },
+    {
+      category: "DevOps & Tools",
+      icon: Layers,
+      items: [
+        { name: "Docker", color: "text-blue-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+
+        { name: "Git", color: "text-red-500", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" }
+      ]
     }
   ],
   projects: [
+    {
+      title: "BookVault",
+      status: "running",
+      tag: "Full Stack",
+      desc: "A comprehensive online bookstore with secure user authentication, inventory management, and a seamless shopping experience.",
+      tech: ["React", "Node.js", "Express", "MongoDB"],
+      link: "https://rest-ebon.vercel.app/",
+      icon: Book,
+    },
+    {
+      title: "Cinovies",
+      status: "running",
+      tag: "Frontend",
+      desc: "Interactive movie discovery platform featuring real-time search, dynamic filtering, and immersive UI design.",
+      tech: ["React", "CSS", "API"],
+      link: "https://cinovies-8au8.vercel.app/",
+      icon: Film,
+    },
     {
       title: "QryPilot",
       status: "running",
@@ -143,18 +160,11 @@ const DATA = {
       link: "https://sentinel-frontend-76am.onrender.com/",
       icon: Activity,
     },
-    {
-      title: "URL Shortener",
-      tag: "Tool",
-      desc: "A minimal, high-performance URL shortener service built with Go.",
-      tech: ["Go", "Docker"],
-      link: "https://url-shortener-s0ck.onrender.com/",
-      github: "https://github.com/ravdreamin/URL-Shortener/",
-      icon: Layers,
-    }
+
   ],
   achievements: [
-    "Achieved 20,000-URL concurrent scrape in ~50 seconds with fault-tolerant handling of dead endpoints and persisted results under load"
+    "Built and deployed multiple full-stack applications",
+    "Achieved 20,000-URL concurrent scrape in ~50 seconds with fault-tolerant handling of dead endpoints"
   ]
 };
 
@@ -383,6 +393,7 @@ const getPillStyles = (colorClass) => {
     'text-blue-400': 'bg-blue-100 text-blue-800 border-blue-300 font-medium',
     'text-green-500': 'bg-emerald-100 text-emerald-800 border-emerald-300 font-medium',
     'text-red-500': 'bg-red-100 text-red-800 border-red-300 font-medium',
+    'text-sky-600': 'bg-sky-100 text-sky-800 border-sky-300 font-medium',
   };
   return colorMap[colorClass] || 'bg-slate-100 text-slate-800 border-slate-300 font-medium';
 };
@@ -518,7 +529,7 @@ const BioContent = () => (
           variants={fadeInUpVariants}
           className="text-slate-500 text-sm sm:text-base leading-relaxed sm:leading-loose mb-6 font-normal"
         >
-          <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">Backend-focused</span> engineer building production-style services. I specialize in <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">high-concurrency systems</span> using <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">Node.js and Go</span>, with a strong focus on <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">system reliability</span>.
+          <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">Full Stack</span> engineer passionate about building seamless web experiences. I specialize in modern technologies like <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">React, Node.js, and Go</span>, delivering <span className="font-medium text-slate-800 hover:text-blue-600 transition-colors">high-performance</span> and scalable solutions.
         </motion.p>
 
         <motion.div
