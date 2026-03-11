@@ -1,49 +1,106 @@
 @import "tailwindcss";
 
+/* Color Palette - Refined & Modern */
+:root {
+  --color-primary: #2563eb;
+  --color-primary-light: #3b82f6;
+  --color-primary-dark: #1d4ed8;
+  
+  --color-accent: #8b5cf6;
+  --color-accent-light: #a78bfa;
+  
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  
+  --color-bg: #fafafa;
+  --color-surface: rgba(255, 255, 255, 0.7);
+  --color-border: rgba(0, 0, 0, 0.06);
+  
+  --color-text: #18181b;
+  --color-text-secondary: #52525b;
+  --color-text-muted: #a1a1aa;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 40px rgba(37, 99, 235, 0.15);
+}
+
 @layer base {
-  :root {
-    --bg: #fafafa;
-    --fg: #0a0a0a;
-    --muted: #737373;
-    --accent: #2563eb;
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-neutral-50 text-neutral-900 antialiased;
-    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.06) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(236, 72, 153, 0.04) 0px, transparent 50%);
+    background-attachment: fixed;
+    letter-spacing: -0.011em;
   }
 
   ::selection {
-    @apply bg-blue-100 text-blue-900;
+    background-color: rgba(37, 99, 235, 0.15);
+    color: var(--color-primary-dark);
   }
 
+  /* Typography Scale */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* Monospace */
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+    font-feature-settings: 'liga' 1, 'calt' 1;
+  }
+
+  /* Scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-neutral-100;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-neutral-300 rounded-full hover:bg-neutral-400;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
   }
 }
 
+/* Utility Classes */
 @layer utilities {
-  .mono {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  .text-balance {
+    text-wrap: balance;
   }
-
-  .text-accent {
-    color: var(--accent);
+  
+  .glass {
+    background: var(--color-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
   }
-
-  .bg-glass {
-    @apply bg-white/60 backdrop-blur-xl border border-neutral-200/60;
-  }
-
-  .bg-glass-dark {
-    @apply bg-neutral-900/5 backdrop-blur-xl border border-neutral-200/40;
+  
+  .gradient-text {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
