@@ -416,13 +416,13 @@ const Header = ({ theme, toggleTheme }) => (
 );
 
 const Hero = () => (
-  <section className="pt-20 pb-8">
-    <div className="max-w-3xl mx-auto px-6 border-b border-slate-200/50 dark:border-white/10 pb-16">
+  <section className="pt-16 sm:pt-20 pb-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 border-b border-slate-200/50 dark:border-white/10 pb-12 sm:pb-16">
       <FadeIn>
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-8 text-center sm:text-left">
+        <div className="flex flex-row items-center gap-4 sm:gap-6 mb-6 sm:mb-8 text-left">
           <MagneticHover>
             <motion.div 
-              className="relative mx-auto sm:mx-0"
+              className="relative shrink-0"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
@@ -430,13 +430,19 @@ const Hero = () => (
               <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2px]">
                 <div className="absolute inset-0 rounded-full overflow-hidden">
                   <motion.div
-                    className="absolute w-[200%] h-[200%] -left-1/2 -top-1/2"
-                    style={{ background: 'conic-gradient(from 0deg, transparent 0%, #18181b 25%, #3f3f46 50%, transparent 75%)' }}
+                    className="absolute w-[200%] h-[200%] -left-1/2 -top-1/2 block dark:hidden"
+                    style={{ background: 'conic-gradient(from 0deg, transparent 0%, #000000 25%, #3f3f46 50%, transparent 75%)' }}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  />
+                  <motion.div
+                    className="absolute w-[200%] h-[200%] -left-1/2 -top-1/2 hidden dark:block"
+                    style={{ background: 'conic-gradient(from 0deg, transparent 0%, #ffffff 25%, #d4d4d8 50%, transparent 75%)' }}
                     animate={{ rotate: 360 }}
                     transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                   />
                 </div>
-                <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white dark:border-white/20 bg-white dark:bg-black">
+                <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white dark:border-[#0a0a0a] bg-white dark:bg-[#0a0a0a]">
                   <img src={pfpImage} alt="Profile" className="w-full h-full object-cover" />
                 </div>
               </div>
@@ -450,9 +456,9 @@ const Hero = () => (
             </motion.div>
           </MagneticHover>
           
-          <div className="flex-1 pt-1 flex flex-col items-center sm:items-start">
+          <div className="flex-1 flex flex-col items-start justify-center pt-1 overflow-hidden">
             <motion.h1 
-              className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-1 tracking-tight transition-colors"
+              className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-0.5 sm:mb-1 tracking-tight leading-tight"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
@@ -460,7 +466,7 @@ const Hero = () => (
               {DATA.name}
             </motion.h1>
             <motion.p 
-              className="text-slate-600 dark:text-slate-300 mb-4 font-semibold text-base sm:text-lg tracking-tight transition-colors"
+              className="text-slate-600 dark:text-slate-300 mb-2 sm:mb-4 font-semibold text-[13px] sm:text-lg tracking-tight leading-snug"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
@@ -468,7 +474,7 @@ const Hero = () => (
               {DATA.role}
             </motion.p>
             <motion.div 
-              className="flex items-center justify-center sm:justify-start gap-4 text-xs sm:text-sm text-slate-500 dark:text-slate-400 transition-colors"
+              className="flex flex-wrap items-center gap-2 sm:gap-4 text-[11px] sm:text-sm text-slate-500 dark:text-slate-400"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -491,20 +497,20 @@ const Hero = () => (
       </FadeIn>
 
       <FadeIn delay={0.1}>
-        <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-8 text-center sm:text-left text-[15px] sm:text-[16px] transition-colors max-w-2xl font-medium">
+        <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-6 sm:mb-8 text-left text-[13px] sm:text-[16px] max-w-2xl font-medium">
           {DATA.bio}
         </p>
       </FadeIn>
 
       <FadeIn delay={0.2}>
-        <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+        <div className="grid grid-cols-3 sm:flex sm:flex-wrap justify-start gap-2 max-w-full">
           {DATA.socials.map(({ name, icon: Icon, href }, i) => (
             <MagneticHover key={name}>
               <motion.a
                 href={href}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 dark:bg-white/[0.05] backdrop-blur-sm border border-slate-200/50 dark:border-white/10 text-slate-700 dark:text-slate-300 text-sm hover:bg-white dark:hover:bg-white/[0.08] hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-none hover:border-slate-300/50 dark:hover:border-white/20 transition-all cursor-pointer pointer-events-auto"
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-1.5 sm:gap-2 px-1 sm:px-4 py-2 sm:py-2 rounded-[10px] sm:rounded-xl bg-white/80 dark:bg-white/[0.05] backdrop-blur-sm border border-slate-200/50 dark:border-white/10 text-slate-700 dark:text-slate-300 text-[11px] sm:text-sm hover:bg-white dark:hover:bg-white/[0.08] hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-none hover:border-slate-300/50 dark:hover:border-white/20 transition-all cursor-pointer pointer-events-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 initial={{ opacity: 0, y: 10 }}
@@ -524,7 +530,7 @@ const Hero = () => (
 
 const Skills = () => (
   <section className="py-8">
-    <div className="max-w-3xl mx-auto px-6 border-b border-slate-200/50 dark:border-white/10 pb-12">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 border-b border-slate-200/50 dark:border-white/10 pb-12">
       <FadeIn>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3 tracking-tight">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-700 dark:from-zinc-100 dark:to-zinc-300 flex items-center justify-center shadow-lg shadow-slate-900/20 dark:shadow-slate-100/10">
@@ -538,26 +544,26 @@ const Skills = () => (
         {DATA.skills.map((group, i) => (
           <FadeIn key={group.category} delay={i * 0.1} className="h-full">
             <motion.div 
-              className="h-full p-5 rounded-2xl bg-white/40 dark:bg-white/[0.02] backdrop-blur-md border border-white/50 dark:border-white/10 hover:bg-white/60 dark:hover:bg-white/[0.04] shadow-lg shadow-slate-200/20 dark:shadow-none hover:shadow-xl hover:shadow-slate-200/40 transition-all cursor-default flex flex-col group"
+              className="h-full p-4 sm:p-5 rounded-2xl bg-white/40 dark:bg-white/[0.02] backdrop-blur-md border border-white/50 dark:border-white/10 hover:bg-white/60 dark:hover:bg-white/[0.04] shadow-lg shadow-slate-200/20 dark:shadow-none hover:shadow-xl hover:shadow-slate-200/40 transition-all cursor-default flex flex-col group"
               whileHover={{ y: -4 }}
             >
-              <div className="flex items-center gap-3 mb-5">
+              <div className="flex flex-col xl:flex-row sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
                 <motion.div
-                  className="w-8 h-8 rounded-xl bg-white/80 dark:bg-white/[0.05] shadow-sm border border-slate-200/50 dark:border-white/10 flex items-center justify-center flex-shrink-0"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-[10px] sm:rounded-xl bg-white/80 dark:bg-white/[0.05] shadow-sm border border-slate-200/50 dark:border-white/10 flex items-center justify-center flex-shrink-0"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <group.icon size={14} className="text-slate-600 dark:text-slate-400" strokeWidth={2} />
+                  <group.icon size={12} className="text-slate-600 dark:text-slate-400 sm:w-3.5 sm:h-3.5" strokeWidth={2} />
                 </motion.div>
-                <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">
+                <span className="text-[9px] sm:text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider sm:tracking-widest mt-0.5 truncate w-full">
                   {group.category}
                 </span>
               </div>
-              <div className="space-y-3 flex-1">
+              <div className="space-y-2 sm:space-y-3 flex-1">
                 {group.items.map((item, j) => (
                   <motion.div 
                     key={item} 
-                    className="text-[15px] text-slate-800 dark:text-slate-200 font-medium"
+                    className="text-[13px] sm:text-[15px] text-slate-800 dark:text-slate-200 font-medium"
                     initial={{ opacity: 0, x: -10 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -577,7 +583,7 @@ const Skills = () => (
 
 const Projects = () => (
   <section className="py-8">
-    <div className="max-w-3xl mx-auto px-6 border-b border-slate-200/50 dark:border-white/10 pb-12">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 border-b border-slate-200/50 dark:border-white/10 pb-12">
       <FadeIn>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3 tracking-tight">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-700 dark:from-zinc-100 dark:to-zinc-300 flex items-center justify-center shadow-lg shadow-slate-900/20 dark:shadow-slate-100/10">
@@ -665,7 +671,7 @@ const Projects = () => (
 
 const Achievements = () => (
   <section className="py-8">
-    <div className="max-w-3xl mx-auto px-6 border-b border-slate-200/50 dark:border-white/10 pb-12">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 border-b border-slate-200/50 dark:border-white/10 pb-12">
       <FadeIn>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3 tracking-tight">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-700 dark:from-zinc-100 dark:to-zinc-300 flex items-center justify-center shadow-lg shadow-slate-900/20 dark:shadow-slate-100/10">
@@ -709,7 +715,7 @@ const Contact = () => {
 
   return (
     <section className="py-12">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <FadeIn>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3 tracking-tight">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-700 dark:from-zinc-100 dark:to-zinc-300 flex items-center justify-center shadow-lg shadow-slate-900/20 dark:shadow-slate-100/10">
@@ -738,7 +744,7 @@ const Contact = () => {
               </p>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <motion.div 
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/90 dark:bg-white/[0.05] backdrop-blur-sm border border-slate-200/50 dark:border-white/10 text-sm text-slate-700 dark:text-slate-300 font-mono shadow-inner text-center sm:text-left"
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/90 dark:bg-white/[0.05] backdrop-blur-sm border border-slate-200/50 dark:border-white/10 text-[13px] sm:text-sm text-slate-700 dark:text-slate-300 font-mono shadow-inner text-center sm:text-left truncate"
                   whileHover={{ borderColor: 'rgba(0,0,0,0.1)' }}
                 >
                   {DATA.email}
@@ -779,7 +785,7 @@ const Contact = () => {
 
 const Footer = () => (
   <footer className="pb-8">
-    <div className="max-w-3xl mx-auto px-6 text-center border-t border-slate-200/50 dark:border-white/10 pt-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center border-t border-slate-200/50 dark:border-white/10 pt-8">
       <p className="text-sm text-slate-400 dark:text-slate-600">
         © {new Date().getFullYear()} Gaurav · Built with React
       </p>
