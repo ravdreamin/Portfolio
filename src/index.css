@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-/* Color Palette - Refined & Modern */
+@custom-variant dark (&:is(.dark *));
+
+/* Light Theme (Default) */
 :root {
   --color-primary: #2563eb;
   --color-primary-light: #3b82f6;
@@ -27,6 +29,33 @@
   --shadow-glow: 0 0 40px rgba(37, 99, 235, 0.15);
 }
 
+/* Dark Theme */
+.dark {
+  --color-primary: #ededed;
+  --color-primary-light: #ffffff;
+  --color-primary-dark: #a1a1aa;
+  
+  --color-accent: #ededed;
+  --color-accent-light: #ffffff;
+  
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  
+  --color-bg: #000000;
+  --color-surface: #0a0a0a;
+  --color-border: rgba(255, 255, 255, 0.1);
+  
+  --color-text: #ededed;
+  --color-text-secondary: #888888;
+  --color-text-muted: #666666;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.8);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.9);
+  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.1);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -40,11 +69,19 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.06) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, rgba(236, 72, 153, 0.04) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(236, 72, 153, 0.08) 0px, transparent 50%);
     background-attachment: fixed;
     letter-spacing: -0.011em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .dark body {
+    background-color: #000000;
+    background-image: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 30% at 50% -10%, rgba(255, 255, 255, 0.08) 0%, transparent 40%);
   }
 
   ::selection {
@@ -82,6 +119,19 @@
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.25);
   }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .dark ::selection {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
 }
 
 /* Utility Classes */
@@ -103,4 +153,19 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+}
+
+/* View Transitions for theme switching */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
 }
