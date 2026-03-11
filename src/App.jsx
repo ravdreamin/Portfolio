@@ -319,7 +319,7 @@ const useTheme = () => {
 // --- Components ---
 
 const Header = ({ theme, toggleTheme }) => (
-  <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center w-full px-4 pointer-events-none">
+  <div className="fixed bottom-4 sm:bottom-6 left-2 right-2 sm:left-0 sm:right-0 z-50 flex justify-center pointer-events-none">
     <motion.header 
       className="relative rounded-full pointer-events-auto p-[1px] overflow-hidden"
       initial={{ y: 100, opacity: 0 }}
@@ -335,24 +335,24 @@ const Header = ({ theme, toggleTheme }) => (
       />
       {/* Inner pill */}
       <div className="relative rounded-full bg-white/70 dark:bg-[#0a0a0a]/80 backdrop-blur-xl shadow-lg shadow-slate-200/20 dark:shadow-none">
-        <div className="px-1.5 py-1.5 flex items-center justify-between gap-1">
+        <div className="px-1 py-1 sm:px-1.5 sm:py-1.5 flex items-center justify-between gap-0 sm:gap-1">
           {/* LOGO PILL */}
           <MagneticHover>
             <motion.div 
-              className="flex items-center justify-center px-2.5 sm:px-4 py-1.5 rounded-full hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer"
+              className="flex items-center justify-center px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <Link to="/"
-                className="text-2xl sm:text-xl font-bold text-slate-900 dark:text-slate-100" 
-                style={{ fontFamily: "'Caveat', cursive" }}
+                className="text-2xl sm:text-2xl font-normal text-slate-900 dark:text-slate-100 pr-1" 
+                style={{ fontFamily: "'Great Vibes', cursive", letterSpacing: "1px" }}
               >
-                Gaurav.
+                gk
               </Link>
             </motion.div>
           </MagneticHover>
 
-          <div className="w-[1px] h-4 bg-slate-300/50 dark:bg-white/10 mx-0.5 sm:mx-1" />
+          <div className="w-[1px] h-3 sm:h-4 bg-slate-300/50 dark:bg-white/10 mx-0.5 sm:mx-1" />
 
           {/* NAV PILLS */}
           <nav className="flex items-center gap-0.5 sm:gap-1">
@@ -362,7 +362,7 @@ const Header = ({ theme, toggleTheme }) => (
               <MagneticHover key={item}>
                 <Link 
                   to={toPath}
-                  className="px-2.5 sm:px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer pointer-events-auto flex items-center whitespace-nowrap"
+                  className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer pointer-events-auto flex items-center whitespace-nowrap"
                 >
                   {item}
                 </Link>
@@ -371,14 +371,14 @@ const Header = ({ theme, toggleTheme }) => (
             })}
           </nav>
 
-          <div className="w-[1px] h-4 bg-slate-300/50 dark:bg-white/10 mx-0.5 sm:mx-1" />
+          <div className="w-[1px] h-3 sm:h-4 bg-slate-300/50 dark:bg-white/10 mx-0.5 sm:mx-1" />
 
           {/* ACTION PILLS */}
           <div className="flex items-center gap-0.5 sm:gap-1">
             <MagneticHover>
               <motion.button
                 onClick={toggleTheme}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer pointer-events-auto"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer pointer-events-auto"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Toggle theme"
@@ -401,7 +401,7 @@ const Header = ({ theme, toggleTheme }) => (
               <motion.a
                 href={cvFile}
                 download="CV.pdf"
-                className="group flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-[11px] sm:text-xs font-semibold hover:bg-slate-800 dark:hover:bg-white transition-all cursor-pointer pointer-events-auto shadow-sm ml-0.5 sm:ml-1"
+                className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-[10px] sm:text-xs font-semibold hover:bg-slate-800 dark:hover:bg-white transition-all cursor-pointer pointer-events-auto shadow-sm ml-0.5 sm:ml-1"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -801,7 +801,7 @@ const Home = () => (
 const Work = () => {
   return (
     <div className="pt-24 pb-24 min-h-screen">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
         
         {/* Page Title */}
         <FadeIn>
@@ -821,23 +821,28 @@ const Work = () => {
             </h2>
           </FadeIn>
           
-          <div className="space-y-6">
+          <div className="relative pl-4 sm:pl-8 border-l border-slate-200/60 dark:border-white/10 space-y-10 sm:space-y-12">
             {DATA.experience.map((exp, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <div className="p-6 rounded-2xl bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm border border-slate-200/50 dark:border-white/10 hover:bg-white/60 dark:hover:bg-white/[0.04] transition-all">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
-                    <div>
-                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">{exp.role}</h3>
-                      <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">{exp.company}</p>
+                <div className="relative group">
+                  {/* Timeline Dot */}
+                  <div className="absolute -left-[21px] sm:-left-[37px] top-1.5 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-white/20 ring-4 ring-white dark:ring-[#0a0a0a] group-hover:bg-slate-900 dark:group-hover:bg-white transition-colors" />
+                  
+                  <div className="p-5 sm:p-6 rounded-2xl bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm hover:bg-white dark:hover:bg-white/[0.04] transition-all">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-3">
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">{exp.role}</h3>
+                        <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">{exp.company}</p>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 text-xs font-mono bg-slate-100 dark:bg-white/[0.05] border border-slate-200/50 dark:border-white/5 px-2.5 py-1 rounded-md w-fit">
+                        <Calendar size={12} />
+                        {exp.duration}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-sm font-mono">
-                      <Calendar size={13} />
-                      {exp.duration}
-                    </div>
+                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                      {exp.desc}
+                    </p>
                   </div>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
-                    {exp.desc}
-                  </p>
                 </div>
               </FadeIn>
             ))}
@@ -1162,7 +1167,7 @@ const Blog = () => {
 
   return (
     <div className="pt-24 pb-24 min-h-screen">
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
         {/* Hero header */}
         <FadeIn>
@@ -1178,8 +1183,8 @@ const Blog = () => {
 
         {/* Filter tabs + article count */}
         <FadeIn delay={0.05}>
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex gap-1.5 p-1 rounded-xl bg-white/50 dark:bg-white/[0.03] border border-slate-200/50 dark:border-white/[0.06]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div className="flex overflow-x-auto snap-x gap-1.5 p-1 rounded-xl bg-white/50 dark:bg-white/[0.03] border border-slate-200/50 dark:border-white/[0.06] w-full sm:w-auto self-start">
               {[
                 { key: 'all', label: 'All Posts' },
                 { key: 'medium', label: 'Medium' },
@@ -1188,7 +1193,7 @@ const Blog = () => {
                 <button
                   key={key}
                   onClick={() => setFilter(key)}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  className={`snap-start whitespace-nowrap px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     filter === key
                       ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm'
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
@@ -1478,7 +1483,7 @@ const Gallery = () => {
         )}
 
         {!loading && images.length > 0 && (
-          <div className="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
+          <div className="columns-2 md:columns-3 gap-2 sm:gap-4 space-y-2 sm:space-y-4">
             {images.map((img, i) => (
               <FadeIn key={img.id} delay={i * 0.05} className="break-inside-avoid">
                 <motion.div
@@ -1574,12 +1579,12 @@ export default function App() {
       document.head.appendChild(fontLink);
     }
 
-    if (!document.getElementById('caveat-font')) {
-      const caveatLink = document.createElement('link');
-      caveatLink.id = 'caveat-font';
-      caveatLink.href = 'https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap';
-      caveatLink.rel = 'stylesheet';
-      document.head.appendChild(caveatLink);
+    if (!document.getElementById('greatvibes-font')) {
+      const gvLink = document.createElement('link');
+      gvLink.id = 'greatvibes-font';
+      gvLink.href = 'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap';
+      gvLink.rel = 'stylesheet';
+      document.head.appendChild(gvLink);
     }
   }, []);
 
