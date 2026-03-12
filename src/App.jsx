@@ -261,7 +261,7 @@ const useTheme = () => {
     // Check initial preference
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+
     if (savedTheme) {
       setTheme(savedTheme);
       document.documentElement.classList.toggle('dark', savedTheme === 'dark');
@@ -320,7 +320,7 @@ const useTheme = () => {
 
 const Header = ({ theme, toggleTheme }) => (
   <div className="fixed bottom-4 sm:bottom-6 left-2 right-2 sm:left-0 sm:right-0 z-50 flex justify-center pointer-events-none">
-    <motion.header 
+    <motion.header
       className="relative rounded-full pointer-events-auto p-[1px] overflow-hidden"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -338,13 +338,13 @@ const Header = ({ theme, toggleTheme }) => (
         <div className="px-1 py-1 sm:px-1.5 sm:py-1.5 flex items-center justify-between gap-0 sm:gap-1">
           {/* LOGO PILL */}
           <MagneticHover>
-            <motion.div 
+            <motion.div
               className="flex items-center justify-center px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <Link to="/"
-                className="text-2xl sm:text-2xl font-normal text-slate-900 dark:text-slate-100 pr-1" 
+                className="text-2xl sm:text-2xl font-normal text-slate-900 dark:text-slate-100 pr-1"
                 style={{ fontFamily: "'Great Vibes', cursive", letterSpacing: "1px" }}
               >
                 gk
@@ -359,14 +359,14 @@ const Header = ({ theme, toggleTheme }) => (
             {["Work", "Blog", "Gallery"].map((item) => {
               const toPath = `/${item.toLowerCase()}`;
               return (
-              <MagneticHover key={item}>
-                <Link 
-                  to={toPath}
-                  className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer pointer-events-auto flex items-center whitespace-nowrap"
-                >
-                  {item}
-                </Link>
-              </MagneticHover>
+                <MagneticHover key={item}>
+                  <Link
+                    to={toPath}
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-white/80 dark:hover:bg-white/[0.08] transition-all cursor-pointer pointer-events-auto flex items-center whitespace-nowrap"
+                  >
+                    {item}
+                  </Link>
+                </MagneticHover>
               );
             })}
           </nav>
@@ -396,7 +396,7 @@ const Header = ({ theme, toggleTheme }) => (
                 </motion.div>
               </motion.button>
             </MagneticHover>
-            
+
             <MagneticHover>
               <motion.a
                 href={cvFile}
@@ -421,7 +421,7 @@ const Hero = () => (
       <FadeIn>
         <div className="flex flex-row items-center gap-4 sm:gap-6 mb-6 sm:mb-8 text-left">
           <MagneticHover>
-            <motion.div 
+            <motion.div
               className="relative shrink-0"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
@@ -446,7 +446,7 @@ const Hero = () => (
                   <img src={pfpImage} alt="Profile" className="w-full h-full object-cover" />
                 </div>
               </div>
-              <motion.div 
+              <motion.div
                 className="absolute -bottom-1 sm:bottom-0 -right-1 sm:right-0 w-6 h-6 sm:w-7 sm:h-7 bg-emerald-500 rounded-full border-2 border-white dark:border-black flex items-center justify-center shadow-lg shadow-emerald-500/30"
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -455,9 +455,9 @@ const Hero = () => (
               </motion.div>
             </motion.div>
           </MagneticHover>
-          
+
           <div className="flex-1 flex flex-col items-start justify-center pt-1 overflow-hidden">
-            <motion.h1 
+            <motion.h1
               className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-0.5 sm:mb-1 tracking-tight leading-tight"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -465,7 +465,7 @@ const Hero = () => (
             >
               {DATA.name}
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-slate-600 dark:text-slate-300 mb-2 sm:mb-4 font-semibold text-[13px] sm:text-lg tracking-tight leading-snug"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -473,7 +473,7 @@ const Hero = () => (
             >
               {DATA.role}
             </motion.p>
-            <motion.div 
+            <motion.div
               className="flex flex-wrap items-center gap-2 sm:gap-4 text-[11px] sm:text-sm text-slate-500 dark:text-slate-400"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -484,7 +484,7 @@ const Hero = () => (
                 {DATA.location}
               </span>
               <span className="flex items-center gap-1.5">
-                <motion.span 
+                <motion.span
                   className="w-2 h-2 rounded-full bg-emerald-500"
                   animate={{ opacity: [1, 0.5, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
@@ -543,7 +543,7 @@ const Skills = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-stretch">
         {DATA.skills.map((group, i) => (
           <FadeIn key={group.category} delay={i * 0.1} className="h-full">
-            <motion.div 
+            <motion.div
               className="h-full p-4 sm:p-5 rounded-2xl bg-white/40 dark:bg-white/[0.02] backdrop-blur-md border border-white/50 dark:border-white/10 hover:bg-white/60 dark:hover:bg-white/[0.04] shadow-lg shadow-slate-200/20 dark:shadow-none hover:shadow-xl hover:shadow-slate-200/40 transition-all cursor-default flex flex-col group"
               whileHover={{ y: -4 }}
             >
@@ -561,8 +561,8 @@ const Skills = () => (
               </div>
               <div className="space-y-2 sm:space-y-3 flex-1">
                 {group.items.map((item, j) => (
-                  <motion.div 
-                    key={item} 
+                  <motion.div
+                    key={item}
                     className="text-[13px] sm:text-[15px] text-slate-800 dark:text-slate-200 font-medium"
                     initial={{ opacity: 0, x: -10 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -618,10 +618,10 @@ const Projects = () => (
                 />
               </div>
               <div className="absolute inset-[1px] rounded-2xl bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-sm" />
-              
+
               <div className="flex flex-col h-full relative z-10">
                 <div className="flex items-center justify-between mb-4">
-                  <motion.div 
+                  <motion.div
                     className="w-10 h-10 rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-700 dark:from-zinc-100 dark:to-zinc-300 flex items-center justify-center shadow-lg shadow-slate-900/20 dark:shadow-slate-100/10"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 400 }}
@@ -642,7 +642,7 @@ const Projects = () => (
                         <Github size={12} strokeWidth={1.5} />
                       </motion.span>
                     )}
-                    <motion.span 
+                    <motion.span
                       className="p-1.5 rounded-xl text-slate-400 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-100 transition-colors"
                       initial={{ x: 0, y: 0 }}
                       whileHover={{ x: 2, y: -2 }}
@@ -684,7 +684,7 @@ const Achievements = () => (
       <div className="space-y-3">
         {DATA.achievements.map((achievement, i) => (
           <FadeIn key={achievement.title} delay={i * 0.1}>
-            <motion.div 
+            <motion.div
               className="flex items-center gap-4 py-3 px-4 -mx-4 rounded-2xl hover:bg-white/80 dark:hover:bg-white/[0.04] hover:backdrop-blur-sm hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-none transition-all cursor-default"
               whileHover={{ x: 4 }}
             >
@@ -726,7 +726,7 @@ const Contact = () => {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <motion.div 
+          <motion.div
             className="relative p-5 rounded-2xl bg-white/80 dark:bg-white/[0.02] backdrop-blur-sm border border-slate-200/50 dark:border-white/10 overflow-hidden hover:shadow-xl hover:shadow-slate-200/50 transition-all"
             whileHover={{ borderColor: 'var(--tw-border-slate-300)' }}
           >
@@ -737,13 +737,13 @@ const Contact = () => {
               animate={{ x: ['-100%', '200%'] }}
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
             />
-            
+
             <div className="relative">
               <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 leading-relaxed">
                 I'm always open to new opportunities and collaborations. Feel free to reach out!
               </p>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <motion.div 
+                <motion.div
                   className="flex-1 px-4 py-2.5 rounded-xl bg-white/90 dark:bg-white/[0.05] backdrop-blur-sm border border-slate-200/50 dark:border-white/10 text-[13px] sm:text-sm text-slate-700 dark:text-slate-300 font-mono shadow-inner text-center sm:text-left truncate"
                   whileHover={{ borderColor: 'rgba(0,0,0,0.1)' }}
                 >
@@ -808,7 +808,7 @@ const Work = () => {
   return (
     <div className="pt-24 pb-24 min-h-screen">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        
+
         {/* Page Title */}
         <FadeIn>
           <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
@@ -826,14 +826,14 @@ const Work = () => {
               Experience
             </h2>
           </FadeIn>
-          
+
           <div className="relative pl-4 sm:pl-8 border-l border-slate-200/60 dark:border-white/10 space-y-10 sm:space-y-12">
             {DATA.experience.map((exp, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <div className="relative group">
                   {/* Timeline Dot */}
                   <div className="absolute -left-[21px] sm:-left-[37px] top-1.5 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-white/20 ring-4 ring-white dark:ring-[#0a0a0a] group-hover:bg-slate-900 dark:group-hover:bg-white transition-colors" />
-                  
+
                   <div className="p-5 sm:p-6 rounded-2xl bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm hover:bg-white dark:hover:bg-white/[0.04] transition-all">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-3">
                       <div>
@@ -862,7 +862,7 @@ const Work = () => {
               Case Studies
             </h2>
           </FadeIn>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {DATA.projects.map((project, i) => (
               <FadeIn key={project.title} delay={i * 0.06}>
@@ -873,9 +873,9 @@ const Work = () => {
                   <div className="relative rounded-2xl bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm border border-slate-200/50 dark:border-white/10 overflow-hidden hover:bg-white/60 dark:hover:bg-white/[0.04] hover:border-slate-300 dark:hover:border-white/20 transition-all h-full flex flex-col">
                     {/* Screenshot */}
                     <div className="aspect-[16/10] overflow-hidden border-b border-slate-200/30 dark:border-white/10">
-                      <img 
-                        src={project.image} 
-                        alt={project.title} 
+                      <img
+                        src={project.image}
+                        alt={project.title}
                         className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                       />
                     </div>
@@ -930,7 +930,7 @@ const CaseStudy = () => {
   return (
     <div className="pt-24 pb-24 min-h-screen">
       <div className="max-w-3xl mx-auto px-6">
-        
+
         {/* Back */}
         <FadeIn>
           <Link to="/work" className="inline-flex items-center gap-2 text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-10">
@@ -1199,11 +1199,10 @@ const Blog = () => {
                 <button
                   key={key}
                   onClick={() => setFilter(key)}
-                  className={`snap-start whitespace-nowrap px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    filter === key
+                  className={`snap-start whitespace-nowrap px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${filter === key
                       ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm'
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
-                  }`}
+                    }`}
                 >
                   {label}
                 </button>
@@ -1267,11 +1266,10 @@ const Blog = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                         <div className="absolute bottom-0 left-0 right-0 p-6">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md backdrop-blur-sm ${
-                              article.platform === 'medium'
+                            <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md backdrop-blur-sm ${article.platform === 'medium'
                                 ? 'bg-white/20 text-white'
                                 : 'bg-blue-500/30 text-blue-100'
-                            }`}>
+                              }`}>
                               {article.platform === 'medium' ? 'Medium' : 'Hashnode'}
                             </span>
                             <span className="text-white/60 text-[11px]">{formatDate(article.date)}</span>
@@ -1289,11 +1287,10 @@ const Blog = () => {
                         </div>
                         <div className="p-6 w-full">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md ${
-                              article.platform === 'medium'
+                            <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md ${article.platform === 'medium'
                                 ? 'bg-slate-900/10 dark:bg-white/10 text-slate-700 dark:text-slate-300'
                                 : 'bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400'
-                            }`}>
+                              }`}>
                               {article.platform === 'medium' ? 'Medium' : 'Hashnode'}
                             </span>
                             <span className="text-slate-400 dark:text-slate-500 text-[11px]">{formatDate(article.date)}</span>
@@ -1354,9 +1351,8 @@ const Blog = () => {
                         {/* Content */}
                         <div className="p-4 flex flex-col flex-1">
                           <div className="flex items-center gap-2 mb-2">
-                            <span className={`w-1.5 h-1.5 rounded-full ${
-                              article.platform === 'medium' ? 'bg-slate-900 dark:bg-white' : 'bg-blue-500'
-                            }`} />
+                            <span className={`w-1.5 h-1.5 rounded-full ${article.platform === 'medium' ? 'bg-slate-900 dark:bg-white' : 'bg-blue-500'
+                              }`} />
                             <span className="text-slate-400 dark:text-slate-500 text-[11px] font-medium">
                               {article.platform === 'medium' ? 'Medium' : 'Hashnode'}
                             </span>
@@ -1408,13 +1404,13 @@ const Gallery = () => {
       try {
         setLoading(true);
         const res = await fetch('https://res.cloudinary.com/dgdabkabu/image/list/portfolio.json');
-        
+
         if (!res.ok) {
           throw new Error('Could not fetch images.');
         }
 
         const data = await res.json();
-        
+
         if (data.resources && data.resources.length > 0) {
           const formattedImages = data.resources.map(img => {
             const baseUrl = `https://res.cloudinary.com/dgdabkabu/image/upload`;
@@ -1453,7 +1449,7 @@ const Gallery = () => {
   return (
     <div className="pt-24 pb-24 min-h-screen">
       <div className="max-w-5xl mx-auto px-6">
-        
+
         <FadeIn>
           <div className="mb-12">
             <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
@@ -1467,7 +1463,7 @@ const Gallery = () => {
 
         {loading && (
           <div className="flex flex-col items-center justify-center py-24 gap-4">
-             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 flex items-center justify-center">
               <Loader2 size={20} className="text-emerald-500 dark:text-emerald-400 animate-spin" />
             </div>
             <p className="text-slate-400 dark:text-slate-500 text-sm font-medium">Loading gallery...</p>
@@ -1514,30 +1510,30 @@ const Gallery = () => {
       </div>
 
       {lightboxOpen && images[activeImageIndex] && (
-        <div 
+        <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-white/95 dark:bg-black/95 backdrop-blur-xl"
           onClick={closeLightbox}
         >
-          <button 
+          <button
             onClick={closeLightbox}
             className="absolute top-6 right-6 z-50 p-2.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-900 dark:text-white transition-colors"
           >
             <X size={20} strokeWidth={2} />
           </button>
 
-          <div 
-            className="absolute left-0 top-0 bottom-0 w-1/4 cursor-w-resize z-40" 
+          <div
+            className="absolute left-0 top-0 bottom-0 w-1/4 cursor-w-resize z-40"
             onClick={(e) => {
               e.stopPropagation();
               setActiveImageIndex(prev => prev > 0 ? prev - 1 : images.length - 1);
-            }} 
+            }}
           />
-          <div 
-            className="absolute right-0 top-0 bottom-0 w-1/4 cursor-e-resize z-40" 
+          <div
+            className="absolute right-0 top-0 bottom-0 w-1/4 cursor-e-resize z-40"
             onClick={(e) => {
               e.stopPropagation();
               setActiveImageIndex(prev => prev < images.length - 1 ? prev + 1 : 0);
-            }} 
+            }}
           />
 
           <div className="w-full h-full p-4 sm:p-12 flex items-center justify-center relative">
@@ -1576,7 +1572,7 @@ export default function App() {
     link.rel = 'icon';
     link.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23171717%22 rx=%2220%22/><text x=%2250%22 y=%2250%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22system-ui%22 font-weight=%22600%22 font-size=%2250%22>G</text></svg>`;
     document.head.appendChild(link);
-    
+
     if (!document.getElementById('cormorant-font')) {
       const fontLink = document.createElement('link');
       fontLink.id = 'cormorant-font';
