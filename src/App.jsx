@@ -1200,8 +1200,8 @@ const Blog = () => {
                   key={key}
                   onClick={() => setFilter(key)}
                   className={`snap-start whitespace-nowrap px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${filter === key
-                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm'
-                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
                     }`}
                 >
                   {label}
@@ -1267,8 +1267,8 @@ const Blog = () => {
                         <div className="absolute bottom-0 left-0 right-0 p-6">
                           <div className="flex items-center gap-2 mb-3">
                             <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md backdrop-blur-sm ${article.platform === 'medium'
-                                ? 'bg-white/20 text-white'
-                                : 'bg-blue-500/30 text-blue-100'
+                              ? 'bg-white/20 text-white'
+                              : 'bg-blue-500/30 text-blue-100'
                               }`}>
                               {article.platform === 'medium' ? 'Medium' : 'Hashnode'}
                             </span>
@@ -1288,8 +1288,8 @@ const Blog = () => {
                         <div className="p-6 w-full">
                           <div className="flex items-center gap-2 mb-3">
                             <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md ${article.platform === 'medium'
-                                ? 'bg-slate-900/10 dark:bg-white/10 text-slate-700 dark:text-slate-300'
-                                : 'bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400'
+                              ? 'bg-slate-900/10 dark:bg-white/10 text-slate-700 dark:text-slate-300'
+                              : 'bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400'
                               }`}>
                               {article.platform === 'medium' ? 'Medium' : 'Hashnode'}
                             </span>
