@@ -119,7 +119,7 @@ export const DATA = {
       ]
     },
     {
-      role: "Trainee",
+      role: "FullStack Intern",
       company: "Netmax Technologies Pvt. Ltd., Chandigarh",
       duration: "Jan 2025 – Jun 2025",
       desc: [
@@ -127,12 +127,6 @@ export const DATA = {
         "Worked with databases, debugging, deployment concepts, and software workflows.",
         "Built hands-on understanding of scalable web application development."
       ]
-    },
-    {
-      role: "Full Stack Developer",
-      company: "Personal Projects",
-      duration: "2023 - 2026",
-      desc: "Designed and built production-grade full-stack applications from scratch — AI-powered tools, high-throughput scrapers, and e-commerce platforms. Explored modern stacks like Go, Next.js, FastAPI, and LangGraph while shipping real products.",
     },
   ],
   achievements: [
