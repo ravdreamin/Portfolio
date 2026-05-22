@@ -45,9 +45,17 @@ export const Work = () => {
                         {exp.duration}
                       </div>
                     </div>
-                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
-                      {exp.desc}
-                    </p>
+                    {Array.isArray(exp.desc) ? (
+                      <ul className="list-disc pl-4 space-y-1.5 text-slate-600 dark:text-slate-400 text-sm">
+                        {exp.desc.map((bullet, idx) => (
+                          <li key={idx} className="leading-relaxed">{bullet}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                        {exp.desc}
+                      </p>
+                    )}
                   </div>
                 </div>
               </FadeIn>

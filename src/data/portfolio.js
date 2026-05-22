@@ -109,6 +109,26 @@ export const DATA = {
   ],
   experience: [
     {
+      role: "Software Developer Intern",
+      company: "Delta 4 Infotech, Chandigarh",
+      duration: "Nov 2025 – Mar 2026",
+      desc: [
+        "Worked on backend systems, APIs, debugging, and application optimization.",
+        "Collaborated with development teams using Git workflows and modern software practices.",
+        "Assisted in improving backend performance and application reliability."
+      ]
+    },
+    {
+      role: "Trainee",
+      company: "Netmax Technologies Pvt. Ltd., Chandigarh",
+      duration: "Jan 2025 – Jun 2025",
+      desc: [
+        "Completed industrial training focused on backend development, PHP, and REST APIs.",
+        "Worked with databases, debugging, deployment concepts, and software workflows.",
+        "Built hands-on understanding of scalable web application development."
+      ]
+    },
+    {
       role: "Full Stack Developer",
       company: "Personal Projects",
       duration: "2023 - 2026",
