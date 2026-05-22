@@ -19,7 +19,7 @@ import {
 export const DATA = {
   name: "Gaurav",
   role: "Full Stack Engineer",
-  email: "ravcr8r@gmail.com",
+  email: "gk4201729@gmail.com",
   location: "Chandigarh, India",
   bio: "I build scalable web applications and intelligent systems. Passionate about clean code, great UX, and solving complex problems with modern technologies.",
   skills: [
@@ -135,6 +135,6 @@ export const DATA = {
   socials: [
     { name: "GitHub", icon: Github, href: "https://github.com/ravdreamin", username: "ravdreamin" },
     { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/ravdreamin", username: "ravdreamin" },
-    { name: "Email", icon: Mail, href: "mailto:ravcr8r@gmail.com", username: "ravcr8r@gmail.com" },
+    { name: "Email", icon: Mail, href: "mailto:gk4201729@gmail.com", username: "gk4201729@gmail.com" },
   ],
 };
